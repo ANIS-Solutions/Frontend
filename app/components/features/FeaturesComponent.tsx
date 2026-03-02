@@ -1,9 +1,10 @@
-import { FeatureComponentsProps } from "@/app/types/home";
-
-function FeatureComponent({
-  icon,
+import { FeatureComponentsProps } from "@/app/types/feature";
+import React from "react";
+function FeaturesComponent({
   title,
   description,
+  icon,
+  items,
 }: FeatureComponentsProps) {
   return (
     <div
@@ -41,5 +42,4 @@ function FeatureComponent({
     </div>
   );
 }
-
-export default FeatureComponent;
+export default FeaturesComponent;
