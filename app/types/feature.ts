@@ -5,4 +5,6 @@ export interface FeatureComponentsProps {
   title: string;
   description: string;
   items: string[];
+  count?: string;
 }
+
