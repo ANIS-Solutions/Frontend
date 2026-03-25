@@ -1,35 +1,32 @@
 import { Play } from "lucide-react";
+
 function VideoDemoSection() {
   return (
-    <div>
-      <section className="py-10 ">
-        <div className="container mx-auto px-4 w-full max-w-4xl ">
-          {/* Title Section */}
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-semibold text-slate-800">
-              See ANIS in action
-            </h2>
-            <p className="text-slate-600 leading-relaxed">
-              Watch a quick 2-minute video to see how easy it is to set up and
-              use ANIS
-            </p>
-          </div>
+    <section className="py-12 md:py-16 bg-[#F9FAFB]">
+      <div className="max-w-3xl mx-auto px-4">
+        {/* Title */}
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-semibold text-[#2F3E4E] mb-3">
+            See ANIS in action
+          </h2>
+          <p className="text-[#6B7280]">
+            Watch a quick 2-minute video to see how easy it is to set up and use ANIS
+          </p>
+        </div>
 
-          <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-sm border border-gray-200 p-6 md:p-10">
-            <div className="relative bg-gray-100 rounded-2xl h-97.5 flex items-center justify-center">
-              {/* Play Button */}
-              <div className="w-20 h-20 rounded-full bg-orange-200 flex items-center justify-center cursor-pointer hover:scale-105 transition">
-                <Play className="text-orange-500 w-8 h-8 ml-1" />
-              </div>
-
-              <p className="absolute bottom-10 text-slate-500">
-                Demo video coming soon
-              </p>
+        {/* Video Container */}
+        <div className="bg-white rounded-2xl shadow-sm border border-[#E5E7EB] p-4 md:p-6">
+          <div className="relative bg-[#F3F4F6] rounded-xl aspect-video flex flex-col items-center justify-center cursor-pointer hover:bg-[#E5E7EB] transition-colors">
+            {/* Play Button */}
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#FDEEE4] flex items-center justify-center mb-4 hover:scale-105 transition-transform">
+              <Play className="text-[#E07A38] w-6 h-6 md:w-8 md:h-8 ml-1" fill="#E07A38" />
             </div>
+
+            <p className="text-[#9CA3AF] text-sm">Demo video coming soon</p>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
 

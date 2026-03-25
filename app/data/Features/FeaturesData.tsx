@@ -14,7 +14,7 @@ import {
 
 export const FeatureData = [
   {
-    icon: <Eye />,
+    icon: <Eye strokeWidth={1.5} />,
     title: "Real-Time Device Monitoring",
     description:
       "Stay aware of your child's device activity with gentle, non-intrusive monitoring. See what apps they use and how long they spend on each.",
@@ -26,7 +26,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <Clock2 />,
+    icon: <Clock2 strokeWidth={1.5} />,
     title: "Screen Time Control",
     description:
       "Set healthy screen time limits that work for your family. Create schedules that balance digital time with other activities.",
@@ -38,7 +38,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <Ban />,
+    icon: <Ban strokeWidth={1.5} />,
     title: "App & Website Blocking",
     description:
       "Block inappropriate content and distracting apps during homework or family time. Keep your child focused on what matters.",
@@ -50,7 +50,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <Moon />,
+    icon: <Moon strokeWidth={1.5} />,
     title: "Sleep Mode",
     description:
       "Ensure restful nights with automatic bedtime settings. Devices wind down when it's time to sleep, promoting healthy sleep habits.",
@@ -62,7 +62,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <Gift />,
+    icon: <Gift strokeWidth={1.5} />,
     title: "Rewards & Motivation",
     description:
       "Encourage positive behavior with a built-in rewards system. Celebrate achievements and motivate healthy digital habits.",
@@ -74,7 +74,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <MoveUpRight />,
+    icon: <MoveUpRight strokeWidth={1.5} />,
     title: "Weekly Reports & Insights",
     description:
       "Receive simple, actionable insights about your child's digital habits. AI-powered suggestions help you guide them better.",
@@ -86,7 +86,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <MapPin />,
+    icon: <MapPin strokeWidth={1.5} />,
     title: "Location Tracking",
     description:
       "Know where your child is with gentle location awareness. Get peace of mind without feeling invasive.",
@@ -98,7 +98,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <Bell />,
+    icon: <Bell strokeWidth={1.5} />,
     title: "Location Tracking",
     description:
       "Stay informed with intelligent alerts that matter. Get notified about important events without being overwhelmed.",
@@ -111,7 +111,7 @@ export const FeatureData = [
   },
 
   {
-    icon: <Lock />,
+    icon: <Lock strokeWidth={1.5} />,
     title: "Privacy Protection",
     description:
       "Your family's data is secure and private. We prioritize safety and never share information with third parties.",
@@ -123,7 +123,7 @@ export const FeatureData = [
   },
 
   {
-    icon: <Calendar />,
+    icon: <Calendar strokeWidth={1.5} />,
     title: "Multiple Child Profiles",
     description:
       "Manage different rules and settings for each child. Every kid is unique, and ANIS adapts to their individual needs.",
@@ -135,7 +135,7 @@ export const FeatureData = [
     ],
   },
   {
-    icon: <Smartphone />,
+    icon: <Smartphone strokeWidth={1.5} />,
     title: "Cross-Platform Support",
     description:
       "Works on iOS, Android, tablets, and computers. Monitor all your child's devices from one simple dashboard.",
@@ -148,7 +148,7 @@ export const FeatureData = [
   },
 
   {
-    icon: <Calendar />,
+    icon: <Calendar strokeWidth={1.5} />,
     title: "Flexible Scheduling",
     description:
       "Create schedules that adapt to your family's routine. Different rules for school days, weekends, and holidays.",

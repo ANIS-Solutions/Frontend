@@ -5,7 +5,7 @@ import StatsSection from "./StatsSection";
 
 function page() {
   return (
-    <div className="bg-[#F6F5F3]">
+    <div >
       <HeroSection />
       <FeaturesSection />
       <BenefitsSection />

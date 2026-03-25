@@ -5,7 +5,7 @@ function StateComponent({ icon, num, desc }: StateSection) {
     <div className="flex flex-col items-center gap-2 text-center">
       <div className=" flex gap-4">
         {/* Icon */}
-        <div className="text-[#2692CF] text-3xl">{icon}</div>
+        <div className="text-[#1E73BE] text-3xl">{icon}</div>
 
         {/* Title */}
         <h3 className="text-xl font-semibold text-[#2F3E4E]">{num}</h3>

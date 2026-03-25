@@ -1,14 +1,17 @@
-import React from "react";
 import HeroSection from "./HeroSection";
 import FAQSection from "./FAQSection";
 import HelpfulResources from "./HelpfulResources";
+import CTASection from "./CTASection";
+import StillHaveQuestions from "./StillHaveQuestions";
 
 function FaqQuestionPage() {
   return (
-    <div className="bg-[#F6F5F3]">
+    <div >
       <HeroSection />
       <FAQSection />
       <HelpfulResources/>
+      <StillHaveQuestions/>
+      <CTASection/>
     </div>
   );
 }

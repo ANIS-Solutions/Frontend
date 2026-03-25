@@ -1,36 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
-import { CommonQuestionProps } from "@/app/types/faq";
+import { ChevronDown } from "lucide-react";
 
-function CollapsibleItem({ title, description }: CommonQuestionProps) {
-  const [isOpen, setIsOpen] = useState(false);
+interface CollapsibleItemProps {
+  title: string;
+  description: string;
+  defaultOpen?: boolean;
+}
 
-  const toggleCollapse = () => {
-    setIsOpen(!isOpen);
-  };
+function CollapsibleItem({ title, description, defaultOpen = false }: CollapsibleItemProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-gray-200 last:border-none">
+    <div className="border-b border-[#E5E7EB] last:border-b-0">
       <button
-        className="flex justify-between items-center w-full px-6 py-5 text-left hover:bg-gray-50 transition"
-        onClick={toggleCollapse}
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between py-4 px-5 text-left hover:bg-[#F9FAFB] transition-colors"
       >
-        <span className="text-slate-600 font-semibold">{title}</span>
-
-        {isOpen ? (
-          <ChevronUp className="w-5 h-5 text-gray-500" />
-        ) : (
-          <ChevronDown className="w-5 h-5 text-gray-500" />
-        )}
+        <span className="text-sm md:text-base font-medium text-[#2F3E4E] pr-4">
+          {title}
+        </span>
+        <ChevronDown
+          className={`w-5 h-5 text-[#9CA3AF] flex-shrink-0 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
       </button>
 
-      {isOpen && (
-        <div className="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
+      <div
+        className={`overflow-hidden transition-all duration-300 ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <p className="px-5 pb-4 text-sm text-[#6B7280] leading-relaxed">
           {description}
-        </div>
-      )}
+        </p>
+      </div>
     </div>
   );
 }

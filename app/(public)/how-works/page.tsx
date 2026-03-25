@@ -3,14 +3,16 @@ import HeroSection from "./HeroSection";
 import HowWorkSection from "./HowWorkSection";
 import VideoDemoSection from "./VideoDemo";
 import CommonQuestionSection from "./CommonQuestionSection";
+import CTASection from "./CTASection";
 
 function HowWork() {
   return (
-    <div className="bg-[#F6F5F3]">
+    <div>
       <HeroSection />
       <HowWorkSection />
       <VideoDemoSection />
       <CommonQuestionSection />
+      <CTASection/>
     </div>
   );
 }

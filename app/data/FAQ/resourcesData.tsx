@@ -7,10 +7,9 @@ export const resourcesData: ResourceItem[] = [
     link: "how-works",
   },
   {
-    title: "Parent Controls",
-    description:
-      "Manage screen time and keep your child safe online",
-    link: "for-parents",
+    title: "Safety & Privacy",
+    description: "Learn how we protect your family's data",
+    link: "safety-privacy",
   },
   {
     title: "Feature Overview",

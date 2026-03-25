@@ -1,12 +1,11 @@
 import StateComponent from "@/app/components/home/StateComponent";
 import { ratingCards } from "@/app/data/Home/StateSection";
-import React from "react";
 
 function StatsSection() {
   return (
-    <section className="py-12 mt-10">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 justify-items-center">
+  <section className="py-16 bg-[#F9FAFB]">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {ratingCards.map((card, index) => (
             <StateComponent
               key={index}

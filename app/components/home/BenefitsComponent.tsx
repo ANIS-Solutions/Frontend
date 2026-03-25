@@ -12,17 +12,17 @@ function BenefitsComponent({
   textLink,
 }: BenefitsComponentsProps) {
   return (
-    <div className="max-w-6xl mx-auto px-6 sm:py-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <div
-        className={`flex flex-col md:flex-row items-center gap-8 sm:gap-12 ${
-          reverse ? "md:flex-row-reverse" : ""
-        }`}
+        className={`flex flex-col ${
+          reverse ? "md:flex-row-reverse" : "md:flex-row"
+        } items-center gap-10 md:gap-16`}
       >
         <div className="flex-1">
           <Image
             src={img}
             alt={title}
-            className="rounded-2xl shadow-lg"
+            className="rounded-3xl shadow-md object-cover w-full h-auto max-h-[350px]"
             width={500}
             height={500}
           />
@@ -37,7 +37,7 @@ function BenefitsComponent({
 
           <Link
             href={link}
-            className="inline-block text-teal-600 font-medium hover:underline"
+            className="inline-block text-[#1E73BE] font-medium hover:underline"
           >
             {textLink}
           </Link>

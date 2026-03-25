@@ -4,7 +4,7 @@ import HeroSection from './HeroSection'
 
 function FeaturePage() {
   return (
-    <div className='bg-[#F6F5F3]'>
+    <div >
         <HeroSection/>
       <FeaturesSection/>
     </div>
