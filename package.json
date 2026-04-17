@@ -9,16 +9,21 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@anis/shared": "file:../../Backend/anis-shared",
     "@hookform/resolvers": "^5.2.2",
-    "axios": "^1.13.4",
+    "@tanstack/react-query": "^5.99.0",
+    "@tanstack/react-query-devtools": "^5.99.0",
+    "axios": "^1.15.0",
+    "check-password-strength": "^3.0.0",
     "lucide-react": "^0.575.0",
     "next": "16.1.6",
+    "phone": "^3.1.71",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-hook-form": "^7.71.1",
+    "react-hook-form": "^7.72.1",
     "react-toastify": "^11.0.5",
     "zod": "^4.3.6",
-    "zustand": "^5.0.11"
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

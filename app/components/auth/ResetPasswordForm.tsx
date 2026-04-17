@@ -1,20 +1,19 @@
 "use client";
-import { useAuth } from "@/app/context/AuthContext";
+
+import { useState, FormEvent } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
 import { authService } from "@/app/services/auth.service";
-import { LoginData, User } from "@/app/types/auth.types";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import Link from "next/link";
 
-export default function LoginForm() {
+export default function ResetPasswordForm() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { token } = useParams<{ token: string }>();
 
-  const [formData, setFormData] = useState<LoginData>({
-    email: "",
+  const [formData, setFormData] = useState({
     password: "",
+    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -40,8 +39,11 @@ export default function LoginForm() {
     setErrors({});
 
     const newErrors: Record<string, string> = {};
-    if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
+    if (!formData.confirmPassword)
+      newErrors.confirmPassword = "Confirm password is required";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -51,20 +53,16 @@ export default function LoginForm() {
     setIsLoading(true);
 
     try {
-      const response = await authService.login(formData);
-      login(null as unknown as User, response.accessToken);
+      await authService.resetPassword(token, {
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
 
-      router.push("/");
-      // if (!response.data.user.isVerified) {
-      //   router.push("/verify-otp");
-      //   router.push("/login");
-      // } else {
-      //   router.push("/");
-      // }
-
-      router.push("/");
-    } catch (error) {
-      setServerError(error instanceof Error ? error.message : "Login failed");
+      router.push("/login");
+    } catch (err) {
+      setServerError(
+        err instanceof Error ? err.message : "Password reset failed",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +71,10 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8">
-        <h1 className="text-2xl font-bold text-center mb-6">Welcome Back</h1>
+        <h1 className="text-2xl font-bold text-center mb-2">Reset Password</h1>
+        <p className="text-center text-sm text-gray-500 mb-6">
+          Enter your new password
+        </p>
 
         {serverError && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
@@ -83,17 +84,7 @@ export default function LoginForm() {
 
         <form onSubmit={handleSubmit}>
           <Input
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="you@example.com"
-            value={formData.email}
-            onChange={handleChange}
-            error={errors.email}
-          />
-
-          <Input
-            label="Password"
+            label="New Password"
             name="password"
             type="password"
             placeholder="••••••••"
@@ -102,24 +93,24 @@ export default function LoginForm() {
             error={errors.password}
           />
 
-          <div className="flex justify-end mb-4">
-            <Link
-              href="/forget-password"
-              className="text-sm text-[#1E71BB] hover:underline"
-            >
-              Forgot password?
-            </Link>
-          </div>
+          <Input
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            error={errors.confirmPassword}
+          />
 
           <Button type="submit" isLoading={isLoading}>
-            Login
+            Reset Password
           </Button>
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-[#1E71BB] hover:underline">
-            Register
+          <Link href="/login" className="text-[#1E71BB] hover:underline">
+            Back to Login
           </Link>
         </p>
       </div>

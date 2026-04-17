@@ -30,7 +30,9 @@ function HeroSection() {
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             href="/register"
-            className="inline-flex justify-center bg-[#E07A38] hover:bg-[#c96a2d] text-white rounded-lg px-6 py-3 font-medium transition-all duration-300"
+            // className="text-sm font-medium bg-[#2fa1dd] text-white px-5 py-2 rounded-[7px] hover:bg-[#216184e0] transition-colors"
+
+            className="inline-flex justify-center bg-[#2fa1dd] hover:bg-[#216184e0] text-white rounded-lg px-6 py-3 font-medium transition-all duration-300"
           >
             Get Started Free
           </Link>

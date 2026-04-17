@@ -3,15 +3,15 @@ import FeaturesSection from "./FeaturesSection";
 import HeroSection from "./HeroSection";
 import StatsSection from "./StatsSection";
 
-function page() {
+export default function HomePage() {
   return (
-    <div >
-      <HeroSection />
-      <FeaturesSection />
-      <BenefitsSection />
-      <StatsSection />
-    </div>
+    <>
+      <div>
+        <HeroSection />
+        <FeaturesSection />
+        <BenefitsSection />
+        <StatsSection />
+      </div>
+    </>
   );
 }
-
-export default page;

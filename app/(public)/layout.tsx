@@ -1,4 +1,5 @@
-import Footer from "../components/layout/Footer"
+import Footer from "../components/layout/Footer";
+import Navbar from "../components/layout/Navbar";
 
 export default function PublicLayout({
   children,
@@ -7,11 +8,16 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      {/* <Navbar /> */}
+      <>
+        <Navbar />
+        <main className="min-h-screen bg-white">{children}</main>
+        <Footer />
+      </>
+      {/* <Navbar />
       <main className="min-h-screen bg-white">
         {children}
       </main>
-      <Footer />
+      <Footer /> */}
     </>
   );
 }

@@ -1,13 +1,21 @@
 "use client";
-import React, { FormEvent, useState } from "react";
-import { registerUser } from "../../services/auth.service";
+
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import { ApiErrorResponse } from "@/app/types/errors";
-import { toast, ToastContainer } from "react-toastify";
-function RegisterForm() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [form, setForm] = useState({
+import Link from "next/link";
+import { useAuth } from "@/app/context/AuthContext";
+import { RegisterData } from "@/app/types/auth.types";
+import { registerSchema } from "@/app/lib/validators/auth.schema";
+import { getZodErrors } from "@/app/lib/validators/getZodErrors";
+import { authService } from "@/app/services/auth.service";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
+
+export default function RegisterForm() {
+  const router = useRouter();
+  const { login } = useAuth();
+
+  const [formData, setFormData] = useState<RegisterData>({
     email: "",
     password: "",
     confirmPassword: "",
@@ -16,191 +24,154 @@ function RegisterForm() {
     lastName: "",
     birthDate: "",
   });
-  const router = useRouter();
 
-  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (errors[name]) {
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[name];
+        return updated;
+      });
+    }
   };
 
-  const submitRegisterForm = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setServerError("");
+    setErrors({});
 
-    if (form.password !== form.confirmPassword) {
-      toast.error("Passwords do not match");
-      setIsLoading(false);
+    const result = registerSchema.safeParse(formData);
+
+    if (!result.success) {
+      setErrors(getZodErrors(result.error));
       return;
     }
+
+    setIsLoading(true);
+
     try {
-      await registerUser(form);
-      toast.success("Registered successfully!");
-      router.push("/login");
-    } catch (error: unknown) {
-      if (axios.isAxiosError<ApiErrorResponse>(error)) {
-        const data = error.response?.data;
-        if (data?.errors && data.errors.length > 0) {
-          data.errors.forEach((err) => {
-            const field = err.field.split(".").pop();
-            toast.error(`${field}: ${err.message}`);
-          });
-        } else if (data?.message) {
-          toast.error(data.message);
-        } else {
-          toast.error("Registration failed");
-        }
-      } else {
-        toast.error("Something went wrong");
-      }
+      const response = await authService.register({
+        email: result.data.email,
+        password: result.data.password,
+        confirmPassword: result.data.confirmPassword,
+        phone: result.data.phone,
+        firstName: result.data.firstName,
+        lastName: result.data.lastName,
+        birthDate: result.data.birthDate.toLocaleDateString("en-US"),
+      });
+
+      login(response.data.user, response.accessToken);
+      router.push("/verify-otp");
+      // router.push("/login");
+
+    } catch (error) {
+      setServerError(
+        error instanceof Error ? error.message : "Registration failed",
+      );
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col from-gray-500 to-gray-500">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-4 space-y-6">
-        <h2 className="text-xl font-bold text-center text-gray-800">
-          Create Your Account
-        </h2>
-        <form onSubmit={submitRegisterForm} className="space-y-4">
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <label htmlFor="firstName" className="block text-gray-700 mb-1">
-                First Name
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                placeholder="Enter First Name"
-                name="firstName"
-                value={form.firstName}
-                onChange={handelChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-gray-700 mb-1" htmlFor="lastName">
-                Last Name
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                placeholder="Enter Last Name"
-                name="lastName"
-                value={form.lastName}
-                onChange={handelChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8">
+        <h1 className="text-2xl font-bold text-center mb-6">Create Account</h1>
+
+        {serverError && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+            {serverError}
           </div>
-          <div>
-            <label className="block text-gray-700 mb-1" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter Email"
-              name="email"
-              value={form.email}
-              onChange={handelChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-2 gap-3">
+            <Input
+              label="First Name"
+              name="firstName"
+              placeholder="Ziko"
+              value={formData.firstName}
+              onChange={handleChange}
+              error={errors.firstName}
             />
-          </div>
-          <div>
-            <label htmlFor="phone" className="block text-gray-700 mb-1">
-              Phone
-            </label>
-            <input
-              type="text"
-              id="phone"
-              placeholder="Enter Phone"
-              name="phone"
-              value={form.phone}
-              onChange={handelChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-          </div>
-          <div>
-            <label htmlFor="date" className="block text-gray-700 mb-1">
-              Enter BirthDate
-            </label>
-            <input
-              type="date"
-              id="date"
-              placeholder="Enter birthDate"
-              name="birthDate"
-              value={form.birthDate}
-              onChange={handelChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-gray-700 mb-1">
-              Enter Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter Password"
-              name="password"
-              value={form.password}
-              onChange={handelChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-gray-700 mb-1"
-            >
-              Enter Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              placeholder="Confirm Password"
-              name="confirmPassword"
-              value={form.confirmPassword}
-              onChange={handelChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+            <Input
+              label="Last Name"
+              name="lastName"
+              placeholder="Mofied"
+              value={formData.lastName}
+              onChange={handleChange}
+              error={errors.lastName}
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            style={{ backgroundColor: "#004879" }}
-            className="w-full text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 hover:brightness-110"
-          >
-            {isLoading ? "Loading..." : "Register"}
-          </button>
-        </form>
-        <div>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
           />
-        </div>
+
+          <Input
+            label="Phone"
+            name="phone"
+            type="tel"
+            placeholder="+201234567890"
+            value={formData.phone}
+            onChange={handleChange}
+            error={errors.phone}
+          />
+
+          <Input
+            label="Birth Date"
+            name="birthDate"
+            type="date"
+            value={formData.birthDate}
+            onChange={handleChange}
+            error={errors.birthDate}
+          />
+
+          <Input
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="••••••••"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+          />
+
+          <Input
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            error={errors.confirmPassword}
+          />
+
+          <Button type="submit" isLoading={isLoading}>
+            Register
+          </Button>
+        </form>
+
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link href="/login" className="text-[#1E71BB] hover:underline">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
 }
-
-export default RegisterForm;

@@ -34,10 +34,9 @@ function Footer() {
           <div className="space-y-6">
             <h3 className="text-base font-semibold text-slate-800">Product</h3>
             <div className="flex flex-col gap-4 text-sm text-slate-600">
-              <Link href="">Features</Link>
-              <Link href="">How It Works</Link>
+              <Link href="/features">Features</Link>
+              <Link href="/how-works">How It Works</Link>
               <Link href="">Reports</Link>
-              <Link href="">Pricing</Link>
             </div>
           </div>
 
@@ -46,9 +45,9 @@ function Footer() {
               Resources
             </h3>
             <div className="flex flex-col gap-4 text-sm text-slate-600">
-              <Link href="">For Parents</Link>
+              <Link href="/for-parents">For Parents</Link>
               <Link href="">Safety & Privacy</Link>
-              <Link href="">FAQ</Link>
+              <Link href="/faq">FAQ</Link>
               <Link href="">About Us</Link>
             </div>
           </div>
