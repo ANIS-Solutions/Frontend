@@ -1,11 +1,11 @@
 import React from 'react'
 
-function page() {
+function AppControl() {
   return (
     <div>
-      hi
+      app
     </div>
   )
 }
 
-export default page
+export default AppControl

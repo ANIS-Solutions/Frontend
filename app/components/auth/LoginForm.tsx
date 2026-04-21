@@ -1,16 +1,15 @@
 "use client";
-import { useAuth } from "@/app/context/AuthContext";
-import { authService } from "@/app/services/auth.service";
-import { LoginData, User } from "@/app/types/auth.types";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState, FormEvent } from "react";
+import Link from "next/link";
+import { LoginData } from "@/app/types/api/auth.types";
+import { loginSchema } from "@/app/lib/validators/auth.schema";
+import { getZodErrors } from "@/app/lib/validators/getZodErrors";
+import { useLogin } from "../../hooks/auth/useLogin";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import Link from "next/link";
 
 export default function LoginForm() {
-  const router = useRouter();
-  const { login } = useAuth();
+  const { mutate, isLoading, error: serverError } = useLogin();
 
   const [formData, setFormData] = useState<LoginData>({
     email: "",
@@ -18,13 +17,10 @@ export default function LoginForm() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [serverError, setServerError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
     if (errors[name]) {
       setErrors((prev) => {
         const updated = { ...prev };
@@ -36,38 +32,15 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setServerError("");
     setErrors({});
 
-    const newErrors: Record<string, string> = {};
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.password) newErrors.password = "Password is required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    const result = loginSchema.safeParse(formData);
+    if (!result.success) {
+      setErrors(getZodErrors(result.error));
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      const response = await authService.login(formData);
-      login(null as unknown as User, response.accessToken);
-
-      router.push("/");
-      // if (!response.data.user.isVerified) {
-      //   router.push("/verify-otp");
-      //   router.push("/login");
-      // } else {
-      //   router.push("/");
-      // }
-
-      router.push("/");
-    } catch (error) {
-      setServerError(error instanceof Error ? error.message : "Login failed");
-    } finally {
-      setIsLoading(false);
-    }
+    await mutate(result.data);
   };
 
   return (
@@ -102,12 +75,12 @@ export default function LoginForm() {
             error={errors.password}
           />
 
-          <div className="flex justify-end mb-4">
+          <div className="text-right mb-4">
             <Link
               href="/forget-password"
               className="text-sm text-[#1E71BB] hover:underline"
             >
-              Forgot password?
+              Forgot Password?
             </Link>
           </div>
 

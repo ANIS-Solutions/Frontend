@@ -1,11 +1,11 @@
 import React from 'react'
 
-function page() {
+function Location() {
   return (
     <div>
-      hi
+      Location
     </div>
   )
 }
 
-export default page
+export default Location

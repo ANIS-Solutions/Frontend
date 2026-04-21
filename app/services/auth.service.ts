@@ -1,99 +1,58 @@
 //All Functions that Deals with Backend auth endpoints
-
-import { apiRequest } from "../lib/api/auth.api";
+import axiosInstance from "../lib/api/auth.api";
 import {
-  AuthResponse,
+  ApiResponse,
+  AuthData,
   ForgetPasswordData,
   GenerateOtpData,
   LoginData,
   RegisterData,
   ResetPasswordData,
+  User,
   VerifyOtpData,
-} from "../types/auth.types";
+} from "../types/api/auth.types";
 
 export const authService = {
   register(data: RegisterData) {
-    return apiRequest<AuthResponse>("/auth/register", {
-      method: "POST",
-      body: data,
-    });
+    return axiosInstance.post<ApiResponse<AuthData>>("/auth/register", data);
   },
 
   login(data: LoginData) {
-    return apiRequest<AuthResponse>("/auth/login", {
-      method: "POST",
-      body: data,
-    });
+    return axiosInstance.post<ApiResponse<AuthData>>("/auth/login", data);
   },
 
-  logout(token: string) {
-    return apiRequest("/auth/logout", {
-      method: "POST",
-      token,
-    });
+  logout() {
+    return axiosInstance.post<ApiResponse>("/auth/logout");
   },
 
-  // generateOtp(data: GenerateOtpData, token: string) {
-  //   // const params = new URLSearchParams({
-  //   //   email: data.email,
-  //   //   reason: data.reason,
-  //   // });
-  //   return apiRequest("/auth/otp", {
-  //     method: "GET",
-  //     body: data,
-  //     token,
-  //   });
-  // },
-
-  generateOtp(data: GenerateOtpData, token: string) {
-    return apiRequest("/auth/otp", {
-      method: "GET",
-      params: {
-        email: data.email,
-        reason: data.reason,
-      },
-      token,
-    });
-  },
-
-
-
-  getMe: async (token: string) => {
-    const res = await fetch("/parents/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!res.ok) throw new Error("Failed to fetch user");
-
-    return res.json();
+  generateOtp(data: GenerateOtpData) {
+    return axiosInstance.post<ApiResponse>("/auth/generate-otp", data);
   },
 
   verifyOtp(data: VerifyOtpData) {
-    return apiRequest("/auth/otp", {
-      method: "POST",
-      body: data,
-    });
+    return axiosInstance.post<ApiResponse>("/auth/verify-otp", data);
   },
 
   forgotPassword(data: ForgetPasswordData) {
-    return apiRequest("/auth/password/forgot", {
-      method: "POST",
-      body: data,
-    });
+    return axiosInstance.post<ApiResponse>("/auth/password/forgot", data);
   },
 
   resetPassword(token: string, data: ResetPasswordData) {
-    return apiRequest(`/auth/password/reset/${token}`, {
-      method: "PATCH",
-      body: data,
-    });
+    return axiosInstance.patch<ApiResponse>(
+      `/auth/password/reset/${token}`,
+      data,
+    );
   },
 
   refreshToken() {
-    return apiRequest<{ accessToken: string }>("/auth/refresh-token", {
-      method: "POST",
+    return axiosInstance.post<ApiResponse<{ accessToken: string }>>(
+      "/auth/refresh-token",
+    );
+  },
+
+  getMe(token?: string) {
+    return axiosInstance.get<ApiResponse<User>>("/parents/me", {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
   },
 };

@@ -1,71 +1,42 @@
 "use client";
-
+import { useState, FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
+import { useVerifyOtp } from "../../hooks/auth/useVerifyOtp";
+import { OtpReason } from "@/app/types/api/auth.types";
 import { authService } from "@/app/services/auth.service";
-import { FormEvent, useState } from "react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/context/AuthContext";
 
-function VerifyOtpForm() {
-  const router = useRouter();
-  const { user, token } = useAuth();
+export default function VerifyOtpForm() {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email") || "";
+
+  const { mutate, isLoading, error } = useVerifyOtp();
   const [otp, setOtp] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isResending, setIsResending] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  const handleSendOtp = async () => {
-    if (!user || !token) return;
-    setError("");
-    setIsResending(true);
-
-    try {
-      await authService.generateOtp(
-        { email: user.email, reason: "REGISTER" },
-        token,
-      );
-      setSuccess("OTP sent to your email successfully");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to send OTP");
-    } finally {
-      setIsResending(false);
-    }
-  };
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    if (!user) return;
-
-    if (otp.length !== 6) {
-      setError("OTP must be 6 digits");
-      return;
-    }
-    setIsLoading(true);
-
-    try {
-      await authService.verifyOtp({
-        email: user.email,
-        otp,
-        reason: "REGISTER",
-      });
-
-      router.push("/");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Verification failed");
-    } finally {
-      setIsLoading(false);
-    }
+    if (!otp || otp.length !== 6) return;
+    await mutate(email, otp, OtpReason.REGISTER);
   };
 
-  if (!user || !token) {
-    router.push("/register");
-    return null;
-  }
+  const handleResend = async () => {
+    setResendLoading(true);
+    setResendMessage("");
+    try {
+      await authService.generateOtp({
+        email,
+        reason: OtpReason.REGISTER,
+      });
+      setResendMessage("Code sent successfully!");
+    } catch {
+      setResendMessage("Failed to resend code, please try again");
+    } finally {
+      setResendLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -73,8 +44,9 @@ function VerifyOtpForm() {
         <h1 className="text-2xl font-bold text-center mb-2">
           Verify Your Email
         </h1>
-        <p className="text-center text-sm text-gray-500 mb-6">
-          Enter the 6-digit code sent to {user.email}
+        <p className="text-center text-gray-500 text-sm mb-6">
+          We sent a 6-digit code to{" "}
+          <span className="font-medium text-gray-700">{email}</span>
         </p>
 
         {error && (
@@ -83,9 +55,13 @@ function VerifyOtpForm() {
           </div>
         )}
 
-        {success && (
-          <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-600 rounded-lg text-sm">
-            {success}
+        {resendMessage && (
+          <div className={`mb-4 p-3 rounded-lg text-sm border ${
+            resendMessage.includes("successfully")
+              ? "bg-green-50 border-green-200 text-green-600"
+              : "bg-red-50 border-red-200 text-red-600"
+          }`}>
+            {resendMessage}
           </div>
         )}
 
@@ -93,28 +69,28 @@ function VerifyOtpForm() {
           <Input
             label="OTP Code"
             name="otp"
-            type="text"
             placeholder="123456"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
-            error=""
+            maxLength={6}
           />
+
           <Button type="submit" isLoading={isLoading}>
             Verify
           </Button>
         </form>
 
-        <button
-          type="button"
-          onClick={handleSendOtp}
-          disabled={isResending}
-          className="mt-4 w-full text-center text-sm text-[#1E71BB] hover:underline disabled:text-gray-400"
-        >
-          {isResending ? "Sending..." : "Resend OTP"}
-        </button>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Didn&apos;t receive the code?{" "}
+          <button
+            onClick={handleResend}
+            disabled={resendLoading}
+            className="text-[#1E71BB] hover:underline disabled:opacity-50"
+          >
+            {resendLoading ? "Sending..." : "Resend Code"}
+          </button>
+        </p>
       </div>
     </div>
   );
 }
-
-export default VerifyOtpForm;

@@ -16,7 +16,7 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { user, token, logout ,isLoading} = useAuth();
+  const { user, token, logout, isLoading } = useAuth();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,7 +34,28 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-    if (isLoading) return null;
+
+  if (isLoading) {
+    return (
+      <nav className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/home" className="flex items-center gap-2">
+              <Image
+                src={LogoAnis}
+                style={{ width: "50px", height: "50px" }}
+                alt="logo"
+              />
+              <span className="text-xl font-bold text-gray-800 tracking-tight">
+                ANIS
+              </span>
+            </Link>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+
   const isLoggedIn = !!token;
   const userInitial = user?.email?.charAt(0).toUpperCase() || "?";
 

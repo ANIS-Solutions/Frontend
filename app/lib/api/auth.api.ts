@@ -1,47 +1,52 @@
-//call api from backend
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+import axios from "axios";
 
-interface FetchOptions {
-  method?: "GET" | "POST" | "PATCH" | "DELETE";
-  body?: unknown;
-  token?: string;
-    params?: Record<string, string>; 
-}
-
-export async function apiRequest<T>(
-  endpoint: string,
-  options: FetchOptions = {},
-): Promise<T> {
-  const { method = "GET", body, token } = options;
-
-  const headers: Record<string, string> = {
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
     "Content-Type": "application/json",
-  };
+  },
+  withCredentials: true,
+});
 
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
-  const fetchOptions: RequestInit = {
-    method,
-    headers,
-    credentials: "include",
-  };
-  if (body) {
-    fetchOptions.body = JSON.stringify(body);
-  }
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, fetchOptions);
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-  let data;
-  try {
-    data = await response.json();
-  } catch {
-    throw new Error("Invalid response from server");
-  }
+      try {
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+          {},
+          { withCredentials: true },
+        );
 
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong");
-  }
-  return data as T;
-}
+        const newToken = data.accessToken;
+        localStorage.setItem("accessToken", newToken);
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+        return axiosInstance(originalRequest);
+      } catch {
+        localStorage.removeItem("accessToken");
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
+
+export default axiosInstance;
