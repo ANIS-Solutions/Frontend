@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "../components/ui/sidebar";
 import ProtectedRoute from "@/app/components/ProtectedRoute/protect-route";
+import Sidebar from "@/app/components/ui/Sidebar";
 
 export default function DashboardLayout({
   children,
@@ -17,7 +17,7 @@ export default function DashboardLayout({
         <Sidebar open={open} setOpen={setOpen} />
 
         <main
-          className="p-6 transition-all duration-300"
+          className="p-6 transition-all duration-300 bg-[#FBFBFB]"
           style={{
             marginLeft: open ? "260px" : "0px",
           }}
