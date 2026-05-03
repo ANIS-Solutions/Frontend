@@ -17,7 +17,7 @@ export default function DashboardLayout({
         <Sidebar open={open} setOpen={setOpen} />
 
         <main
-          className="p-6 transition-all duration-300 bg-[#FBFBFB]"
+          className="p-6 transition-all duration-300"
           style={{
             marginLeft: open ? "260px" : "0px",
           }}

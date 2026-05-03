@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, Shield, MapPin, Menu } from "lucide-react";
+import { Users, Shield, MapPin, Menu, Settings } from "lucide-react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useLogout } from "@/app/hooks/auth/useLogout";
 import LogoImage from "@/public/imgs/Logo.jpeg";
@@ -11,8 +11,8 @@ const links = [
   { name: "Children", href: "/dashboard/children", icon: Users },
   { name: "App Control", href: "/dashboard/app-control", icon: Shield },
   { name: "Location", href: "/dashboard/location", icon: MapPin },
+  { name: "Setting", href: "/dashboard/profile", icon: Settings },
 ];
-
 export default function Sidebar({
   open,
   setOpen,

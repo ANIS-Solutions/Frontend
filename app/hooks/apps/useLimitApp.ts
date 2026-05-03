@@ -1,0 +1,33 @@
+"use client";
+import { useState } from "react";
+import { appService } from "../../services/app.service";
+import axios from "axios";
+
+export function useLimitApp() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const mutate = async (
+    packageId: string,
+    childId: string,
+    dailyLimit: number
+  ) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      await appService.limitApp(packageId, childId, { dailyLimit });
+      return true;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || "Failed to set limit");
+      } else {
+        setError("Something went wrong");
+      }
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { mutate, isLoading, error };
+}

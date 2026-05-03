@@ -2,7 +2,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@anis/shared"],
+  // transpilePackages: ["@anis/shared"],
+  transpilePackages: ["leaflet"],
 };
 
 export default nextConfig;
