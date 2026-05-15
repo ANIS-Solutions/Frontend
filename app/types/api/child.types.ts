@@ -15,7 +15,7 @@ export interface Child {
 
 export interface AddChildPayload {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   gender: "MALE" | "FEMALE";
   hobbies: string[];
   dob: string;

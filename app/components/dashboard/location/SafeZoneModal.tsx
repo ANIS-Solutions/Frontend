@@ -140,7 +140,7 @@ export default function SafeZoneModal({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="fixed inset-0 z-9999 flex items-center justify-center"
       style={{ background: "rgba(0,0,0,0.4)" }}
       onClick={onClose}
     >
@@ -179,7 +179,7 @@ export default function SafeZoneModal({
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label
                 className="block text-xs font-medium mb-1"

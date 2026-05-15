@@ -110,7 +110,7 @@ export default function PersonalInfoForm() {
         </div>
       )}
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <div>
             <label
               className="block text-xs font-medium mb-1.5"
@@ -127,14 +127,12 @@ export default function PersonalInfoForm() {
               }`}
             />
             {fieldErrors.firstName && (
-              <p
-                className="text-xs mt-1 text-red-500"
-                style={{ color: "#A32D2D" }}
-              >
+              <p className="text-xs mt-1" style={{ color: "#A32D2D" }}>
                 {fieldErrors.firstName}
               </p>
             )}
           </div>
+
           <div>
             <label
               className="block text-xs font-medium mb-1.5"
@@ -151,17 +149,13 @@ export default function PersonalInfoForm() {
               }`}
             />
             {fieldErrors.lastName && (
-              <p
-                className="text-xs mt-1 text-red-500"
-                style={{ color: "#A32D2D" }}
-              >
+              <p className="text-xs mt-1" style={{ color: "#A32D2D" }}>
                 {fieldErrors.lastName}
               </p>
             )}
           </div>
 
-          {/* Email read only */}
-          <div className="col-span-2">
+          <div className="col-span-1 sm:col-span-2">
             <label
               className="block text-xs font-medium mb-1.5"
               style={{ color: "var(--color-text-secondary)" }}
@@ -243,7 +237,7 @@ export default function PersonalInfoForm() {
 
         {/* Actions */}
         <div
-          className="flex justify-end gap-3 pt-4"
+          className="flex flex-col sm:flex-row justify-end gap-3 pt-4"
           style={{ borderTop: "0.5px solid var(--color-border-tertiary)" }}
         >
           <button
@@ -258,7 +252,7 @@ export default function PersonalInfoForm() {
                   : "",
               })
             }
-            className="px-5 py-2.5 rounded-xl text-sm"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm"
             style={{
               border: "0.5px solid var(--color-border-secondary)",
               background: "transparent",
@@ -271,7 +265,7 @@ export default function PersonalInfoForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium text-white"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-medium text-white"
             style={{
               background: "#1E73BE",
               border: "none",

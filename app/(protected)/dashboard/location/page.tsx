@@ -21,10 +21,22 @@ export default function LocationPage() {
 
   const effectiveChildId = selectedChildId || children[0]?.id || "";
 
-  const { locations, isLoading: locationsLoading, refetch } = useLocations(effectiveChildId);
+  const {
+    locations,
+    isLoading: locationsLoading,
+    refetch,
+  } = useLocations(effectiveChildId);
   const { liveLocation, isConnected } = useLiveLocation(effectiveChildId);
-  const { mutate: addLocation, isLoading: addLoading, error: addError } = useAddLocation();
-  const { mutate: updateLocation, isLoading: updateLoading, error: updateError } = useUpdateLocation();
+  const {
+    mutate: addLocation,
+    isLoading: addLoading,
+    error: addError,
+  } = useAddLocation();
+  const {
+    mutate: updateLocation,
+    isLoading: updateLoading,
+    error: updateError,
+  } = useUpdateLocation();
   const { mutate: deleteLocation } = useDeleteLocation();
 
   const handleAdd = () => {
@@ -88,10 +100,7 @@ export default function LocationPage() {
 
       {/* Content */}
       {effectiveChildId ? (
-        <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: "300px 1fr" }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-3">
           {/* Left Panel */}
           <div className="flex flex-col gap-3">
             <LiveLocationCard
@@ -120,7 +129,7 @@ export default function LocationPage() {
           <p>No children found. Add a child first.</p>
         </div>
       )}
-
+      
       {/* Modal */}
       <SafeZoneModal
         isOpen={modalOpen}

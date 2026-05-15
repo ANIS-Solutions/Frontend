@@ -1,91 +1,112 @@
 "use client";
 import { Child } from "@/app/types/api/child.types";
-import { useRouter } from "next/navigation";
-import { Pencil, Smartphone, SmartphoneNfc,UserRound } from "lucide-react";
+import { Smartphone, SmartphoneNfc, Calendar, Pencil } from "lucide-react";
 
 interface ChildCardProps {
   child: Child;
+  onEdit: (child: Child) => void;
 }
 
-export default function ChildCard({ child }: ChildCardProps) {
-  const router = useRouter();
+export default function ChildCard({ child, onEdit }: ChildCardProps) {
+  const isMale = child.gender === "MALE";
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border p-5 flex flex-col gap-3 hover:shadow-md transition">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className={`w-11 h-11 rounded-full flex items-center justify-center ${
-            child.gender === "MALE"
-              ? "bg-blue-100 text-blue-500"
-              : "bg-pink-100 text-pink-500"
-          }`}>
-            <UserRound size={22} />
-          </div>
-          <div>
-            <h3 className="font-semibold text-gray-800">{child.firstName}</h3>
-            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-              child.gender === "MALE"
-                ? "bg-blue-100 text-blue-600"
-                : "bg-pink-100 text-pink-600"
-            }`}>
-              {child.gender === "MALE" ? "Boy" : "Girl"}
-            </span>
-          </div>
-        </div>
+    <div
+      className="rounded-2xl overflow-hidden flex flex-col"
+      style={{ background: "white", border: "0.5px solid #e5e7eb" }}
+    >
+      {/* Color bar */}
+      {/* <div style={{ height: 5, background: isMale ? "#1E73BE" : "#993556" }} /> */}
 
-        <button
-          onClick={() => router.push(`/dashboard/children/${child.id}/edit`)}
-          className="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition text-gray-500 hover:text-[#1E73BE]"
-        >
-          <Pencil size={16} />
-        </button>
-      </div>
-
-      <div className="text-sm text-gray-500">
-        <span className="font-medium text-gray-700">DOB: </span>
-        {new Date(child.dob).toLocaleDateString("en-GB")}
-      </div>
-
-      <div className="flex items-center gap-2 text-sm">
-        {child.deviceName ? (
-          <>
-            <Smartphone size={15} className="text-green-500" />
-            <span className="text-gray-600">{child.deviceName}</span>
-          </>
-        ) : (
-          <>
-          
-            <SmartphoneNfc size={15} className="text-gray-300" />
-            <span className="text-gray-400 text-xs">No device paired</span>
-          </>
-        )}
-      </div>
-
-      <div>
-        <p className="text-xs font-medium text-gray-500 mb-1.5">Hobbies</p>
-        <div className="flex flex-wrap gap-1.5">
-          {child.hobbies.length > 0 ? (
-            child.hobbies.map((hobby) => (
+      <div className="p-4 flex flex-col gap-3 flex-1" >
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-11 h-11 rounded-full flex items-center justify-center text-xl shrink-0"
+              style={{ background: isMale ? "#E6F1FB" : "#FBEAF0" }}
+            >
+              {isMale ? "🧒" : "👧"}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-800">{child.firstName}</p>
               <span
-                key={hobby}
-                className="bg-[#1E73BE]/10 text-[#1E73BE] text-xs px-2 py-1 rounded-full"
+                className="text-xs px-2 py-0.5 rounded-full font-medium"
+                style={{
+                  background: isMale ? "#E6F1FB" : "#FBEAF0",
+                  color: isMale ? "#0C447C" : "#72243E",
+                }}
               >
-                {hobby}
+                {isMale ? "Boy" : "Girl"}
               </span>
-            ))
-          ) : (
-            <span className="text-xs text-gray-400">No hobbies listed</span>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
 
-      <div className="flex items-center gap-1.5">
-        <div className={`w-2 h-2 rounded-full ${
-          child.isActive ? "bg-green-400" : "bg-gray-300"
-        }`} />
-        <span className="text-xs text-gray-500">
-          {child.isActive ? "Active" : "Inactive"}
-        </span>
+          <button
+            onClick={() => onEdit(child)}
+            className="w-8 h-8 rounded-lg flex items-center justify-center"
+            style={{ border: "0.5px solid #e5e7eb", background: "transparent", cursor: "pointer" }}
+          >
+            <Pencil size={14} className="text-gray-400" />
+          </button>
+        </div>
+
+        {/* Info */}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2 text-xs text-gray-500">
+            <Calendar size={13} />
+            <span>{new Date(child.dob).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs">
+            {child.deviceName ? (
+              <>
+                <Smartphone size={13} className="text-green-500" />
+                <span className="text-gray-600">{child.deviceName}</span>
+              </>
+            ) : (
+              <>
+                <SmartphoneNfc size={13} className="text-gray-300" />
+                <span className="text-gray-400">No device paired</span>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Hobbies */}
+        {child.hobbies.length > 0 && (
+          <div>
+            <p className="text-xs text-gray-400 mb-1.5">Hobbies</p>
+            <div className="flex flex-wrap gap-1.5">
+              {child.hobbies.map((h) => (
+                <span
+                  key={h}
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    background: isMale ? "#E6F1FB" : "#FBEAF0",
+                    color: isMale ? "#0C447C" : "#72243E",
+                  }}
+                >
+                  {h}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Status */}
+        <div
+          className="flex items-center gap-1.5 pt-2 mt-auto"
+          style={{ borderTop: "0.5px solid #f3f4f6" }}
+        >
+          <div
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: child.isActive ? "#22c55e" : "#9ca3af" }}
+          />
+          <span className="text-xs text-gray-400">
+            {child.isActive ? "Active" : "Inactive"}
+          </span>
+        </div>
       </div>
     </div>
   );

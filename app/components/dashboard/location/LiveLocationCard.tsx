@@ -133,7 +133,10 @@ export default function LiveLocationCard({
             className="mx-auto mb-2"
             style={{ color: "var(--color-text-tertiary)" }}
           />
-          <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+          <p
+            className="text-xs"
+            style={{ color: "var(--color-text-secondary)" }}
+          >
             No location data yet
           </p>
         </div>

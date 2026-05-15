@@ -128,7 +128,8 @@ export default function LocationMap({
     >
       <div
         ref={mapRef}
-        style={{ width: "100%", height: "100%", minHeight: 520 }}
+        className="w-full"
+        style={{ height: "100%", minHeight: 300 }}
       />
 
       <div
