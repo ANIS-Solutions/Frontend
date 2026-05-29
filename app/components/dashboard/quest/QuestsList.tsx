@@ -109,7 +109,6 @@ export default function QuestsList({ childId }: QuestsListProps) {
 
       {/* Filter + Add Button */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
-        {/* Filter - scrollable على موبايل */}
         <div className="w-full sm:w-auto overflow-x-auto">
           <div
             className="flex gap-1 p-1 rounded-xl min-w-max"

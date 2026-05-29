@@ -33,7 +33,7 @@ export function useLogin() {
       }
 
       login(user, token);
-      router.push("/dashboard");
+      router.push("/dashboard/children");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || "Login failed");

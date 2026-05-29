@@ -26,6 +26,24 @@ export interface Quest {
   points: number;
 }
 
+
+/*
+{
+    "success": true,
+    "status": "success",
+    "message": "Quest is created successfully!",
+    "data": {
+        "id": "6a0df7300334b6842f1caf47",
+        "childId": "6a076131dee685848cb4f555",
+        "title": "ana quest title",
+        "type": "Education",
+        "status": "NOT_STARTED",
+        "description": "ana desc. ll quest dah",
+        "deadline": "2026-05-20T18:02:22.402Z",
+        "points": 42
+    }
+}
+*/
 export interface AddQuestPayload {
   title: string;
   description: string;

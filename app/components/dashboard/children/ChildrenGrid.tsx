@@ -89,7 +89,7 @@ export default function ChildrenGrid() {
           {/* Add Card */}
           <button
             onClick={handleAdd}
-            className="rounded-2xl flex flex-col items-center justify-center gap-3 min-h-[180px] transition-all hover:border-[#1E73BE]"
+            className="rounded-2xl flex flex-col items-center justify-center gap-3 min-h-45 transition-all hover:border-[#1E73BE]"
             style={{
               background: "#f9fafb",
               border: "0.5px dashed #d1d5db",

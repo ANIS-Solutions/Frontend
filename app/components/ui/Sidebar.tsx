@@ -2,7 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, Shield, MapPin, Menu, Settings, Trophy } from "lucide-react";
+import {
+  Users,
+  Shield,
+  MapPin,
+  Menu,
+  Settings,
+  Trophy,
+  Award,
+} from "lucide-react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useLogout } from "@/app/hooks/auth/useLogout";
 import LogoImage from "@/public/imgs/Logo.jpeg";
@@ -12,8 +20,8 @@ const links = [
   { name: "App Control", href: "/dashboard/app-control", icon: Shield },
   { name: "Location", href: "/dashboard/location", icon: MapPin },
   { name: "Quests", href: "/dashboard/quests", icon: Trophy },
+  { name: "Rewards", href: "/dashboard/rewards", icon: Award },
   { name: "Setting", href: "/dashboard/profile", icon: Settings },
-  
 ];
 
 export default function Sidebar({
@@ -33,7 +41,7 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen w-65 bg-white flex flex-col justify-between p-[20px_15px] shadow-[2px_0_10px_rgba(0,0,0,0.05)] z-[1000] transition-transform duration-300
+      className={`fixed top-0 left-0 h-screen w-65 bg-white flex flex-col justify-between p-[20px_15px] shadow-[2px_0_10px_rgba(0,0,0,0.05)] z-1000 transition-transform duration-300
       ${open ? "translate-x-0" : "-translate-x-full"}`}
     >
       <button
