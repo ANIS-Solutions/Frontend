@@ -2,7 +2,6 @@ import HeroSection from "./HeroSection";
 import FAQSection from "./FAQSection";
 import HelpfulResources from "./HelpfulResources";
 import CTASection from "./CTASection";
-import StillHaveQuestions from "./StillHaveQuestions";
 
 function FaqQuestionPage() {
   return (
@@ -10,8 +9,8 @@ function FaqQuestionPage() {
       <HeroSection />
       <FAQSection />
       <HelpfulResources/>
-      <StillHaveQuestions/>
-      <CTASection/>
+      {/* <StillHaveQuestions/> */}
+      {/* <CTASection/> */}
     </div>
   );
 }

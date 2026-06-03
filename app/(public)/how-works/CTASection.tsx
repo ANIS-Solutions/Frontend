@@ -21,12 +21,13 @@ function CTASection() {
             Create Parent Account
           </Link>
 
-          <Link
-            href="/pricing"
-            className="inline-flex justify-center text-[#2F3E4E] border border-[#D1D5DB] bg-white rounded-lg px-6 py-3 font-medium transition-all duration-300 hover:border-[#9CA3AF]"
+ <Link
+            href="mailto:support@anis.app"
+            className="inline-flex justify-center text-[#2F3E4E] border border-[#D1D5DB] bg-white rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:border-[#9CA3AF]"
           >
-            View Pricing
+            Email Support
           </Link>
+
         </div>
       </div>
     </section>

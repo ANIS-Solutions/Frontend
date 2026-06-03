@@ -9,7 +9,7 @@ export const resourcesData: ResourceItem[] = [
   {
     title: "Safety & Privacy",
     description: "Learn how we protect your family's data",
-    link: "safety-privacy",
+    link: "for-parents",
   },
   {
     title: "Feature Overview",
