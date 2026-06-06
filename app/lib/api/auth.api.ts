@@ -7,11 +7,24 @@ const axiosInstance = axios.create({
 });
 
 // Request interceptor
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     const token = localStorage.getItem("accessToken");
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error),
+// );
+
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
@@ -45,7 +58,10 @@ axiosInstance.interceptors.response.use(
       } catch {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("user");
-        window.location.href = "/login";
+        // window.location.href = "/login";
+        if (typeof window !== "undefined") {
+  window.location.href = "/login";
+}
       }
     }
 

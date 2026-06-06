@@ -97,18 +97,6 @@ export const FeatureData = [
       "Battery-efficient tracking",
     ],
   },
-  {
-    icon: <Bell strokeWidth={1.5} />,
-    title: "Location Tracking",
-    description:
-      "Stay informed with intelligent alerts that matter. Get notified about important events without being overwhelmed.",
-    items: [
-      "Customizable alert preferences",
-      "Emergency notifications",
-      "Milestone celebrations",
-      "Quiet hours settings",
-    ],
-  },
 
   {
     icon: <Lock strokeWidth={1.5} />,

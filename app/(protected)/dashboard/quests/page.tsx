@@ -24,7 +24,7 @@ export default function QuestsPage() {
   return (
     <div className="py-6 px-4">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Quests & Rewards</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Quests</h1>
         <p className="text-sm text-gray-500 mt-1">
           Assign tasks and motivate your children
         </p>

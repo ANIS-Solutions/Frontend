@@ -1,4 +1,3 @@
-import axiosInstance from "../lib/api/auth.api";
 import {
   UpdateProfilePayload,
   ChangePasswordPayload,
@@ -7,6 +6,7 @@ import {
   DeactivateResponse,
 } from "../types/api/profile.types";
 import { ApiResponse } from "../types/api/auth.types";
+import axiosInstance from "../lib/api/auth.api";
 
 export const profileService = {
   updateProfile(data: UpdateProfilePayload) {
