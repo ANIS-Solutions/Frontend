@@ -4,7 +4,7 @@ import { useChildren } from "@/app/hooks/children/useChildren";
 import { Child } from "@/app/types/api/child.types";
 import ChildCard from "./ChildCard";
 import ChildModal from "./ChildModel";
-import { Users, Plus } from "lucide-react";
+import { Users } from "lucide-react";
 
 interface Props {
   modalOpen: boolean;

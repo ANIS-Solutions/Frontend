@@ -1,22 +1,10 @@
 import axios from "axios";
-
+import { env } from "@/app/config/env";
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: env.apiUrl,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
-
-// Request interceptor
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("accessToken");
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error),
-// );
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -42,7 +30,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+          `${env.apiUrl}/auth/refresh-token`,
           {},
           { withCredentials: true },
         );
@@ -60,8 +48,8 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem("user");
         // window.location.href = "/login";
         if (typeof window !== "undefined") {
-  window.location.href = "/login";
-}
+          window.location.href = "/login";
+        }
       }
     }
 
@@ -70,57 +58,3 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
-
-// import axios from "axios";
-
-// const axiosInstance = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_API_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   withCredentials: true,
-// });
-
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("accessToken");
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error),
-// );
-
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       try {
-//         const { data } = await axios.post(
-//           `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
-//           {},
-//           { withCredentials: true },
-//         );
-
-//         const newToken = data.accessToken || data.data?.accessToken;
-
-//         localStorage.setItem("accessToken", newToken);
-//         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-
-//         return axiosInstance(originalRequest);
-//       } catch {
-//         localStorage.removeItem("accessToken");
-//         window.location.href = "/login";
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   },
-// );
-
-// export default axiosInstance;

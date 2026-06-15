@@ -14,6 +14,7 @@
     "@tanstack/react-query-devtools": "^5.99.0",
     "axios": "^1.15.1",
     "check-password-strength": "^3.0.0",
+    "firebase": "^12.14.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.575.0",
     "next": "16.1.6",

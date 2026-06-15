@@ -1,6 +1,6 @@
 import axiosInstance from "../lib/api/auth.api";
 import { ApiResponse } from "../types/api/auth.types";
-
+import { env } from "@/app/config/env";
 import {
   AddLocationPayload,
   UpdateLocationPayload,
@@ -42,7 +42,7 @@ export const locationService = {
   streamLocation(childId: string) {
     const token = localStorage.getItem("accessToken");
     return new EventSource(
-      `${process.env.NEXT_PUBLIC_API_URL}/locations/stream/${childId}?token=${token}`,
+      `${env.apiUrl}/locations/stream/${childId}?token=${token}`,
     );
   },
 };

@@ -149,13 +149,6 @@ export default function ChildModal({
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-xl p-3 mb-6 text-left">
-              <p className="text-xs text-gray-400 mb-1">Pair Token</p>
-              <p className="font-mono text-xs text-gray-600 break-all">
-                {qrData.pairToken}
-              </p>
-            </div>
-
             <button
               onClick={() => {
                 onSuccess();
