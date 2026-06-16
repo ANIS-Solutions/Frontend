@@ -37,7 +37,6 @@ export default function NotificationBell() {
   const { mutate: deleteNotification } = useDeleteNotification();
   const { mutate: clearAll, isLoading: clearLoading } = useClearNotifications();
 
-  // Close on outside click
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (
