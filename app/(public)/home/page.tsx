@@ -10,7 +10,7 @@ export default function HomePage() {
         <HeroSection />
         <FeaturesSection />
         <BenefitsSection />
-        <StatsSection />
+        {/* <StatsSection /> */}
       </div>
     </>
   );
