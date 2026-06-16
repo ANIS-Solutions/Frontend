@@ -5,6 +5,7 @@ importScripts(
   "https://www.gstatic.com/firebasejs/10.8.1/firebase-messaging-compat.js",
 );
 
+
 firebase.initializeApp({
   apiKey: "AIzaSyBZYDLDtUMNzq6Pg91up3QMDLtFeMIag3c",
   authDomain: "anis-dev.firebaseapp.com",
