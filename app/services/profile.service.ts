@@ -31,8 +31,11 @@ export const profileService = {
   },
 
   requestReactivation(email: string) {
-    return axiosInstance.get<ApiResponse>("/parents/reactivate", {
-      params: { email },
-    });
+    return axiosInstance.post<ApiResponse>("/parents/reactivate", { email });
   },
+  // requestReactivation(email: string) {
+  //   return axiosInstance.get<ApiResponse>("/parents/reactivate", {
+  //     params: { email },
+  //   });
+  // },
 };
