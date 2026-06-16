@@ -12,6 +12,7 @@ import {
   Award,
   ScreenShare,
   ShieldCheck,
+  FileText,
 } from "lucide-react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useLogout } from "@/app/hooks/auth/useLogout";
@@ -21,13 +22,14 @@ const links = [
   { name: "Children", href: "/dashboard/children", icon: Users },
   { name: "App Control", href: "/dashboard/app-control", icon: Shield },
   { name: "Location", href: "/dashboard/location", icon: MapPin },
-  { name: "Live Screen", href: "/dashboard/live-screen", icon: ScreenShare },
+  // { name: "Live Screen", href: "/dashboard/live-screen", icon: ScreenShare },
   { name: "Content Filter", href: "/dashboard/prompt", icon: ShieldCheck },
   { name: "Quests", href: "/dashboard/quests", icon: Trophy },
   { name: "Rewards", href: "/dashboard/rewards", icon: Award },
+  { name: "Reports", href: "/dashboard/report", icon: FileText },
   { name: "Setting", href: "/dashboard/profile", icon: Settings },
 ];
- 
+
 export default function Sidebar({
   open,
   setOpen,
