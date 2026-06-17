@@ -17,7 +17,6 @@ Next.js web application powering the ANIS parental control & child monitoring pl
 ![Leaflet](https://img.shields.io/badge/Leaflet-199900?logo=leaflet&logoColor=white)
 ![Zod](https://img.shields.io/badge/Zod-3068B7?logo=zod&logoColor=white)
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white)
-![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?logo=react-hook-form&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
 ![PNPM](https://img.shields.io/badge/pnpm-F69220?logo=pnpm&logoColor=white)
 
