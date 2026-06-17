@@ -1,5 +1,5 @@
 export const env = {
-  apiUrl: process.env.NEXT_PUBLIC_API_URL,
+  apiUrl: process.env.NEXT_PUBLIC_API_URL ?? 'https://api.anis.solutions/api/v1',
 
   firebase: {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
