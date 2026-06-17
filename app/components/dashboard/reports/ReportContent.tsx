@@ -94,28 +94,28 @@ function parseReportSections(text: string | null): string[] {
 export default function ReportContent({ report }: ReportContentProps) {
   const sections = parseReportSections(report.reportText);
 
-  if (report.generationStatus !== "completed" || !report.reportText) {
-    return (
-      <div
-        className="rounded-2xl p-8 sm:p-16 text-center"
-        style={{ background: "white", border: "0.5px solid #e5e7eb" }}
-      >
-        <div
-          className="w-12 h-12 border-4 border-t-transparent rounded-full animate-spin mx-auto mb-5"
-          style={{ borderColor: "#1E73BE", borderTopColor: "transparent" }}
-        />
-        <p
-          className="text-base font-semibold mb-2"
-          style={{ color: "#111827" }}
-        >
-          جاري إنشاء التقرير...
-        </p>
-        <p className="text-sm" style={{ color: "#9ca3af" }}>
-          قد يستغرق هذا بضع دقائق، يرجى المحاولة لاحقاً.
-        </p>
-      </div>
-    );
-  }
+  // if (report.generationStatus !== "completed" || !report.reportText) {
+  //   return (
+  //     <div
+  //       className="rounded-2xl p-8 sm:p-16 text-center"
+  //       style={{ background: "white", border: "0.5px solid #e5e7eb" }}
+  //     >
+  //       <div
+  //         className="w-12 h-12 border-4 border-t-transparent rounded-full animate-spin mx-auto mb-5"
+  //         style={{ borderColor: "#1E73BE", borderTopColor: "transparent" }}
+  //       />
+  //       <p
+  //         className="text-base font-semibold mb-2"
+  //         style={{ color: "#111827" }}
+  //       >
+  //         جاري إنشاء التقرير...
+  //       </p>
+  //       <p className="text-sm" style={{ color: "#9ca3af" }}>
+  //         قد يستغرق هذا بضع دقائق، يرجى المحاولة لاحقاً.
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div
