@@ -95,11 +95,9 @@ export default function AppCard({ app, onSetLimit, onRefetch }: AppCardProps) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            {/* ✅ اسم الـ app بدل الـ packageId */}
             <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
               {app.title || app.packageId}
             </p>
-            {/* ✅ الـ packageId أصغر تحت الاسم */}
             <p className="text-xs text-gray-400 dark:text-gray-500 font-mono hidden sm:block truncate">
               {app.packageId}
             </p>
