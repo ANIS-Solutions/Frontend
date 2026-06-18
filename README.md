@@ -36,11 +36,9 @@ pnpm install
 
 # 4. Configure environment
 cp .env .env.local
-# -> fill in API base URL, Firebase config, etc.
 
 # 5. Start dev server
 pnpm dev
-# -> http://localhost:3000
 ```
 
 ## Build for Production
