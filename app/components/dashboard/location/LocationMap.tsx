@@ -13,6 +13,7 @@ const ZONE_COLORS = ["#1E73BE", "#3B6D11", "#854F0B", "#993556"];
 
 export default function LocationMap({
   safeZones,
+  liveLocation,
   isConnected,
 }: LocationMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -62,6 +63,56 @@ export default function LocationMap({
     });
   };
 
+  const drawLiveMarker = (L: typeof import("leaflet"), map: Map) => {
+  if (!liveLocation) return;
+  const { lat, lng } = liveLocation;
+
+  if (liveMarkerRef.current) {
+    liveMarkerRef.current.setLatLng([lat, lng]);
+    map.panTo([lat, lng]);
+  } else {
+    liveMarkerRef.current = L.marker([lat, lng], {
+      icon: L.divIcon({
+        html: `
+          <div style="position:relative;width:22px;height:22px;">
+            <div style="
+              position:absolute;inset:0;
+              background:#22c55e;border-radius:50%;
+              opacity:0.35;
+              animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+            "></div>
+            <div style="
+              position:absolute;inset:4px;
+              background:#22c55e;border-radius:50%;
+              border:2px solid white;
+              box-shadow:0 0 6px rgba(0,0,0,0.25);
+            "></div>
+          </div>
+          <style>
+            @keyframes ping {
+              75%,100%{transform:scale(2.2);opacity:0}
+            }
+          </style>
+        `,
+        className: "",
+        iconSize: [22, 22],
+        iconAnchor: [11, 11],
+      }),
+      zIndexOffset: 1000,
+    }).addTo(map);
+
+    liveMarkerRef.current.bindPopup(`
+      <div style="font-family:sans-serif;min-width:140px;">
+        <p style="font-weight:600;margin:0 0 6px;font-size:13px;color:#16a34a;">📍 Live Location</p>
+        <p style="font-size:11px;color:#666;margin:0;">Lat: ${lat.toFixed(5)}</p>
+        <p style="font-size:11px;color:#666;margin:3px 0 0;">Lng: ${lng.toFixed(5)}</p>
+      </div>
+    `);
+
+    map.setView([lat, lng], 15);
+  }
+};
+
   useEffect(() => {
     if (typeof window === "undefined" || !mapRef.current) return;
 
@@ -73,17 +124,16 @@ export default function LocationMap({
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
+        liveMarkerRef.current = null;
       }
 
-      const defaultCenter: [number, number] =
-        safeZones.length > 0
-          ? [
-              safeZones[0].location.coordinates[1],
-              safeZones[0].location.coordinates[0],
-            ]
-          : [30.0444, 31.2357];
+const defaultCenter: [number, number] = liveLocation
+  ? [liveLocation.lat, liveLocation.lng] 
+  : safeZones.length > 0
+  ? [safeZones[0].location.coordinates[1], safeZones[0].location.coordinates[0]]
+  : [30.0444, 31.2357];
 
-      map = L.map(mapRef.current!).setView(defaultCenter, 14);
+      map = L.map(mapRef.current!).setView(defaultCenter, 15);
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors",
@@ -91,6 +141,7 @@ export default function LocationMap({
 
       mapInstanceRef.current = map;
       drawZones(L, map);
+      drawLiveMarker(L, map);
     };
 
     initMap();
@@ -105,57 +156,43 @@ export default function LocationMap({
   }, []);
 
   useEffect(() => {
-    if (!mapInstanceRef.current) return;
-    const map = mapInstanceRef.current;
+    if (!mapInstanceRef.current || !liveLocation) return;
+    const update = async () => {
+      const L = await import("leaflet");
+      drawLiveMarker(L, mapInstanceRef.current!);
+    };
+    update();
+  }, [liveLocation]);
 
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
     const redraw = async () => {
       const L = await import("leaflet");
-      drawZones(L, map);
+      drawZones(L, mapInstanceRef.current!);
     };
-
     redraw();
   }, [safeZones]);
 
   return (
     <div
-      className="rounded-2xl overflow-hidden"
-      style={{
-        border: "0.5px solid #e5e7eb",
-        minHeight: 520,
-        position: "relative",
-        zIndex: 1,
-      }}
+      className="rounded-2xl overflow-hidden border-[0.5px] border-gray-200 dark:border-gray-700"
+      style={{ minHeight: 520, position: "relative", zIndex: 1 }}
     >
-      <div
-        ref={mapRef}
-        className="w-full"
-        style={{ height: "100%", minHeight: 300 }}
-      />
+      <div ref={mapRef} className="w-full" style={{ height: "100%", minHeight: 520 }} />
 
       <div
+        className="bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700"
         style={{
-          position: "absolute",
-          top: 12,
-          left: 12,
-          zIndex: 1000,
-          background: "white",
-          borderRadius: 8,
-          padding: "5px 10px",
-          border: "0.5px solid #e5e7eb",
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
+          position: "absolute", top: 12, left: 12, zIndex: 1000,
+          borderRadius: 8, padding: "5px 10px",
+          display: "flex", alignItems: "center", gap: 6,
         }}
       >
-        <div
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: "50%",
-            background: isConnected ? "#22c55e" : "#9ca3af",
-          }}
-        />
-        <span style={{ fontSize: 12, color: "#111827" }}>
+        <div style={{
+          width: 7, height: 7, borderRadius: "50%",
+          background: isConnected ? "#22c55e" : "#9ca3af",
+        }} />
+        <span className="text-gray-900 dark:text-gray-100" style={{ fontSize: 12 }}>
           {isConnected ? "Tracking live" : "No live data"}
         </span>
       </div>

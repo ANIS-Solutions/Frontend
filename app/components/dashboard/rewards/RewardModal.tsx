@@ -109,10 +109,9 @@ export default function RewardModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl p-6 w-full"
+        className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full border-[0.5px] border-gray-200 dark:border-gray-700"
         style={{
           maxWidth: 500,
-          border: "0.5px solid #e5e7eb",
           maxHeight: "90vh",
           overflowY: "auto",
         }}
@@ -120,14 +119,14 @@ export default function RewardModal({
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <p className="text-base font-semibold" style={{ color: "#111827" }}>
+          <p className="text-base font-semibold text-gray-900 dark:text-gray-100">
             {isEdit ? "Edit Reward" : "Add New Reward"}
           </p>
           <button
             onClick={onClose}
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
-            <X size={18} style={{ color: "#6b7280" }} />
+            <X size={18} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
@@ -154,7 +153,7 @@ export default function RewardModal({
               value={formData.name}
               onChange={handleChange}
               placeholder="e.g. Extra screen time..."
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.name ? "border-red-400" : "border-gray-200"}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.name ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
               required
             />
             {fieldErrors?.name && (
@@ -176,7 +175,7 @@ export default function RewardModal({
               onChange={handleChange}
               placeholder="Reward details..."
               rows={3}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] resize-none"
+              className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] resize-none"
               required
             />
           </div>
@@ -196,7 +195,7 @@ export default function RewardModal({
                 value={formData.pointsCost}
                 onChange={handleChange}
                 placeholder="32"
-                className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.pointsCost ? "border-red-400" : "border-gray-200"}`}
+                className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.pointsCost ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
                 required
               />
               {fieldErrors?.pointsCost && (
@@ -216,7 +215,7 @@ export default function RewardModal({
                 name="redemptionType"
                 value={formData.redemptionType}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
+                className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
               >
                 {REDEMPTION_TYPES.map((t) => (
                   <option key={t.value} value={t.value}>
@@ -234,7 +233,7 @@ export default function RewardModal({
                 style={{ color: "#1E73BE" }}
               >
                 Max Redemptions{" "}
-                <span style={{ color: "#9ca3af" }}>(optional)</span>
+                <span className="text-gray-400 dark:text-gray-500">(optional)</span>
               </label>
               <input
                 type="number"
@@ -243,7 +242,7 @@ export default function RewardModal({
                 onChange={handleChange}
                 placeholder="Leave empty for unlimited"
                 min={1}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
+                className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
               />
             </div>
           )}
@@ -261,7 +260,7 @@ export default function RewardModal({
               name="deadline"
               value={formData.deadline}
               onChange={handleChange}
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.deadline ? "border-red-400" : "border-gray-200"}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.deadline ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
               required
             />
             {fieldErrors?.deadline && (
@@ -276,12 +275,10 @@ export default function RewardModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl text-sm"
+              className="flex-1 py-3 rounded-xl text-sm text-gray-500 dark:text-gray-400 border-[0.5px] border-gray-200 dark:border-gray-700"
               style={{
-                border: "0.5px solid #e5e7eb",
                 background: "transparent",
                 cursor: "pointer",
-                color: "#6b7280",
               }}
             >
               Cancel

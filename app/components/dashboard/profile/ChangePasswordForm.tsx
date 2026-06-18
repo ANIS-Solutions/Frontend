@@ -33,16 +33,12 @@ export default function ChangePasswordForm() {
 
   return (
     <div
-      className="rounded-2xl p-6"
-      style={{
-        background: "white",
-        border: "0.5px solid #e5e7eb",
-      }}
+      className="rounded-2xl p-6 bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700"
     >
-      <p className="text-sm font-semibold mb-1" style={{ color: "#111827" }}>
+      <p className="text-sm font-semibold mb-1 text-gray-900 dark:text-gray-100">
         Change Password
       </p>
-      <p className="text-xs mb-5" style={{ color: "#6b7280" }}>
+      <p className="text-xs mb-5 text-gray-500 dark:text-gray-400">
         Choose a strong password to keep your account secure
       </p>
 
@@ -67,8 +63,7 @@ export default function ChangePasswordForm() {
         {fields.map(({ label, name }) => (
           <div key={name}>
             <label
-              className="block text-xs font-medium mb-1.5"
-              style={{ color: "#6b7280" }}
+              className="block text-xs font-medium mb-1.5 text-gray-500 dark:text-gray-400"
             >
               {label}
             </label>
@@ -78,8 +73,8 @@ export default function ChangePasswordForm() {
               value={formData[name as keyof typeof formData]}
               onChange={handleChange}
               placeholder="••••••••"
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 ${
-                fieldErrors[name] ? "border-red-400" : "border-gray-200"
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 dark:bg-gray-700 dark:text-gray-100 ${
+                fieldErrors[name] ? "border-red-400" : "border-gray-200 dark:border-gray-600"
               }`}
               required
             />

@@ -30,7 +30,7 @@ export default function ChildrenGrid({ modalOpen, setModalOpen }: Props) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-white rounded-2xl border h-48 animate-pulse" />
+          <div key={i} className="bg-white dark:bg-gray-800 rounded-2xl border dark:border-gray-700 h-48 animate-pulse" />
         ))}
       </div>
     );
@@ -51,12 +51,12 @@ export default function ChildrenGrid({ modalOpen, setModalOpen }: Props) {
       {children.length > 0 && (
         <div className="grid grid-cols-3 gap-3 mb-5">
           {[
-            { label: "Total", value: stats.total, color: "#111827" },
-            { label: "Paired", value: stats.paired, color: "#3B6D11" },
-            { label: "Not Paired", value: stats.notPaired, color: "#854F0B" },
+            { label: "Total", value: stats.total, color: "var(--stat-neutral)" },
+            { label: "Paired", value: stats.paired, color: "var(--stat-success)" },
+            { label: "Not Paired", value: stats.notPaired, color: "var(--stat-warning)" },
           ].map(({ label, value, color }) => (
-            <div key={label} className="rounded-2xl p-4" style={{ background: "white", border: "0.5px solid #e5e7eb" }}>
-              <p className="text-xs mb-1.5 text-gray-500">{label}</p>
+            <div key={label} className="rounded-2xl p-4 bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700">
+              <p className="text-xs mb-1.5 text-gray-500 dark:text-gray-400">{label}</p>
               <p className="text-2xl font-bold" style={{ color }}>{value}</p>
             </div>
           ))}
@@ -66,11 +66,11 @@ export default function ChildrenGrid({ modalOpen, setModalOpen }: Props) {
       {/* Grid */}
       {children.length === 0 ? (
         <div className="text-center py-16">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Users size={28} className="text-gray-300" />
+          <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users size={28} className="text-gray-300 dark:text-gray-600" />
           </div>
-          <p className="text-base font-medium text-gray-500 mb-1">No children added yet</p>
-          <p className="text-sm text-gray-400">Add your first child to get started</p>
+          <p className="text-base font-medium text-gray-500 dark:text-gray-400 mb-1">No children added yet</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500">Add your first child to get started</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

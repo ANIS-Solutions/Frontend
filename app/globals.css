@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import 'leaflet/dist/leaflet.css';
 
+/* Enable class-based dark mode: Tailwind v4 equivalent of darkMode class */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -15,6 +18,13 @@
   --color-border-secondary: #e5e7eb;
   --color-border-tertiary: #f3f4f6;
 
+  /* Stat-value colors: light values match the original hardcoded design exactly. */
+  --stat-neutral: #111827;
+  --stat-primary: #1E73BE;
+  --stat-success: #3B6D11;
+  --stat-warning: #854F0B;
+  --stat-danger: #A32D2D;
+  --stat-alert: #F72B35;
 }
 
 @theme inline {
@@ -24,11 +34,26 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark mode variable overrides, applied only when <html> has the `.dark` class. */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --color-text-primary: #ededed;
+  --color-text-secondary: #9ca3af;
+  --color-text-tertiary: #6b7280;
+  --color-background-primary: #111827;
+  --color-background-secondary: #1f2937;
+  --color-border-primary: #374151;
+  --color-border-secondary: #374151;
+  --color-border-tertiary: #1f2937;
+
+  /* Lightened so the color coding stays legible on dark cards. */
+  --stat-neutral: #f3f4f6;
+  --stat-primary: #6cb0ef;
+  --stat-success: #a3d977;
+  --stat-warning: #e0b357;
+  --stat-danger: #f08a8a;
+  --stat-alert: #ff7a82;
 }
 
 body {

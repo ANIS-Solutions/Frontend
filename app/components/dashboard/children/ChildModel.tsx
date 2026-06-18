@@ -114,21 +114,20 @@ export default function ChildModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl w-full overflow-y-auto"
+        className="bg-white dark:bg-gray-800 rounded-2xl w-full overflow-y-auto border-[0.5px] border-gray-200 dark:border-gray-700"
         style={{
           maxWidth: 480,
           maxHeight: "90vh",
-          border: "0.5px solid #e5e7eb",
         }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* QR Screen */}
         {qrData ? (
           <div className="p-8 text-center">
-            <h2 className="text-lg font-semibold text-gray-800 mb-1">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-1">
               {formData.firstName} added!
             </h2>
-            <p className="text-sm text-gray-400 mb-6">
+            <p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
               Scan the QR code on the child&apos;s device to pair
             </p>
 
@@ -162,8 +161,8 @@ export default function ChildModal({
         ) : (
           <>
             {/* Header */}
-            <div className="flex items-center justify-between p-5 border-b border-gray-100">
-              <p className="text-sm font-semibold text-gray-800">
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-700">
+              <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
                 {isEdit ? `Edit ${editChild?.firstName}` : "Add Child"}
               </p>
               <button
@@ -174,7 +173,7 @@ export default function ChildModal({
                   cursor: "pointer",
                 }}
               >
-                <X size={18} className="text-gray-400" />
+                <X size={18} className="text-gray-400 dark:text-gray-500" />
               </button>
             </div>
 
@@ -203,7 +202,7 @@ export default function ChildModal({
                     value={formData.firstName}
                     onChange={handleChange}
                     placeholder="Ahmed"
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 ${fieldErrors?.firstName ? "border-red-400" : "border-gray-200"}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.firstName ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
                     required
                   />
                   {fieldErrors?.firstName && (
@@ -227,7 +226,7 @@ export default function ChildModal({
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] text-gray-600"
+                  className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] text-gray-600 dark:text-gray-300"
                   required
                 />
                 {fieldErrors?.dob && (
@@ -316,7 +315,7 @@ export default function ChildModal({
                   style={{ color: "#1E73BE" }}
                 >
                   Hobbies{" "}
-                  <span className="font-normal text-gray-400">(optional)</span>
+                  <span className="font-normal text-gray-400 dark:text-gray-500">(optional)</span>
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -326,7 +325,7 @@ export default function ChildModal({
                       e.key === "Enter" && (e.preventDefault(), addHobby())
                     }
                     placeholder="e.g. Swimming"
-                    className="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300"
+                    className="flex-1 border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300"
                   />
                   <button
                     type="button"
@@ -370,7 +369,7 @@ export default function ChildModal({
 
               {/* Scan */}
               {!isEdit && (
-                <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
+                <div className="border border-gray-200 dark:border-gray-600 rounded-xl p-4 text-center bg-gray-50 dark:bg-gray-900">
                   <ScanLine
                     size={22}
                     className="mx-auto mb-1.5"
@@ -382,7 +381,7 @@ export default function ChildModal({
                   >
                     Scan to connect
                   </p>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
                     QR will appear after saving
                   </p>
                 </div>
@@ -393,9 +392,8 @@ export default function ChildModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex-1 py-3 rounded-xl text-sm text-gray-600"
+                  className="flex-1 py-3 rounded-xl text-sm text-gray-600 dark:text-gray-300 border-[0.5px] border-gray-200 dark:border-gray-700"
                   style={{
-                    border: "0.5px solid #e5e7eb",
                     background: "transparent",
                     cursor: "pointer",
                   }}

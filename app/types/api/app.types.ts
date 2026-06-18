@@ -14,8 +14,13 @@ export interface App {
   childId: string;
   packageId: string;
   settings: AppSettings;
-  stats: AppStats;
+  stats: AppStats; title?: string;
+  iconUrl?: string;
+  categories?: { name: string; id: string | null }[];
+  score?: number;
+  description?: string;
 }
+
 export interface BlockAppPayload {
   isBlocked: boolean;
 }

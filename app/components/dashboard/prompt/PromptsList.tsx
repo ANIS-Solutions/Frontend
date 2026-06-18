@@ -37,7 +37,7 @@ export default function PromptsList({ childId }: PromptsListProps) {
     return (
       <div className="flex flex-col gap-3">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="rounded-2xl h-16 animate-pulse" style={{ background: "#f3f4f6" }} />
+          <div key={i} className="rounded-2xl h-16 animate-pulse bg-gray-100 dark:bg-gray-700" />
         ))}
       </div>
     );
@@ -57,12 +57,12 @@ export default function PromptsList({ childId }: PromptsListProps) {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-5">
         {[
-          { label: "Total Filters", value: stats.total, color: "#111827" },
-          { label: "Threats", value: stats.threats, color: "#A32D2D" },
-          { label: "Blur Action", value: stats.blur, color: "#854F0B" },
+          { label: "Total Filters", value: stats.total, color: "var(--stat-neutral)" },
+          { label: "Threats", value: stats.threats, color: "var(--stat-danger)" },
+          { label: "Blur Action", value: stats.blur, color: "var(--stat-warning)" },
         ].map(({ label, value, color }) => (
-          <div key={label} className="rounded-2xl p-4" style={{ background: "white", border: "0.5px solid #e5e7eb" }}>
-            <p className="text-xs mb-1.5 text-gray-500">{label}</p>
+          <div key={label} className="rounded-2xl p-4 bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700">
+            <p className="text-xs mb-1.5 text-gray-500 dark:text-gray-400">{label}</p>
             <p className="text-2xl font-bold" style={{ color }}>{value}</p>
           </div>
         ))}
@@ -82,12 +82,11 @@ export default function PromptsList({ childId }: PromptsListProps) {
       {/* List */}
       {prompts.length === 0 ? (
         <div
-          className="rounded-2xl p-8 text-center"
-          style={{ background: "#f9fafb", border: "0.5px dashed #d1d5db" }}
+          className="rounded-2xl p-8 text-center bg-gray-50 dark:bg-gray-900 border-[0.5px] border-dashed border-gray-300 dark:border-gray-700"
         >
-          <ShieldCheck size={32} className="mx-auto mb-2" style={{ color: "#d1d5db" }} />
-          <p className="text-sm font-medium mb-1" style={{ color: "#9ca3af" }}>No filters added yet</p>
-          <p className="text-xs" style={{ color: "#9ca3af" }}>Add a content filter to protect your child</p>
+          <ShieldCheck size={32} className="mx-auto mb-2 text-gray-300 dark:text-gray-600" />
+          <p className="text-sm font-medium mb-1 text-gray-400 dark:text-gray-500">No filters added yet</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500">Add a content filter to protect your child</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">

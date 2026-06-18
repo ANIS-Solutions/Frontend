@@ -11,9 +11,12 @@ export default function ChildrenPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold" style={{ color: "#1C1C1E" }}>
+
+          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
             My Children
           </h1>
+
+
           <p className="text-sm mt-1" style={{ color: "#ABABAF" }}>
             Manage your children&apos;s profiles and devices
           </p>

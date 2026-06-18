@@ -122,8 +122,8 @@ export default function PersonalInfoForm() {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 ${
-                fieldErrors.firstName ? "border-red-400" : "border-gray-200"
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 dark:bg-gray-700 dark:text-gray-100 ${
+                fieldErrors.firstName ? "border-red-400" : "border-gray-200 dark:border-gray-600"
               }`}
             />
             {fieldErrors.firstName && (
@@ -144,8 +144,8 @@ export default function PersonalInfoForm() {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 ${
-                fieldErrors.lastName ? "border-red-400" : "border-gray-200"
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 dark:bg-gray-700 dark:text-gray-100 ${
+                fieldErrors.lastName ? "border-red-400" : "border-gray-200 dark:border-gray-600"
               }`}
             />
             {fieldErrors.lastName && (
@@ -200,8 +200,8 @@ export default function PersonalInfoForm() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 ${
-                fieldErrors.phone ? "border-red-400" : "border-gray-200"
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 dark:bg-gray-700 dark:text-gray-100 ${
+                fieldErrors.phone ? "border-red-400" : "border-gray-200 dark:border-gray-600"
               }`}
             />
             {fieldErrors.phone && (
@@ -223,8 +223,8 @@ export default function PersonalInfoForm() {
               name="birthDate"
               value={formData.birthDate}
               onChange={handleChange}
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 ${
-                fieldErrors.birthDate ? "border-red-400" : "border-gray-200"
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] placeholder:text-gray-300 dark:bg-gray-700 dark:text-gray-100 ${
+                fieldErrors.birthDate ? "border-red-400" : "border-gray-200 dark:border-gray-600"
               }`}
             />
             {fieldErrors.birthDate && (

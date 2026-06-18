@@ -3,6 +3,7 @@ import { App } from "@/app/types/api/app.types";
 import { useBlockApp } from "@/app/hooks/apps/useBlockApp";
 import { useDeleteApp } from "@/app/hooks/apps/useDeleteApp";
 import { Trash2 } from "lucide-react";
+import Image from "next/image";
 
 interface AppCardProps {
   app: App;
@@ -16,8 +17,7 @@ export default function AppCard({ app, onSetLimit, onRefetch }: AppCardProps) {
 
   const isBlocked = app.settings.isBlocked;
   const hasLimit = app.settings.dailyLimit > 0;
-  const totalUsage = app.stats.totalUsage;
-
+  const totalUsage = app.stats?.totalUsage ?? 0;
   const usagePercent = hasLimit
     ? Math.min((totalUsage / app.settings.dailyLimit) * 100, 100)
     : 0;
@@ -55,38 +55,52 @@ export default function AppCard({ app, onSetLimit, onRefetch }: AppCardProps) {
 
   return (
     <div
-      className="rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-3"
-      style={{
-        background: isBlocked ? "#fff8f8" : "white",
-        border: `0.5px solid ${isBlocked ? "#fecaca" : "#e5e7eb"}`,
-      }}
+      className={`rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-3 border-[0.5px] ${
+        isBlocked
+          ? "bg-[#fff8f8] dark:bg-red-950/30 border-[#fecaca] dark:border-red-900/50"
+          : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+      }`}
     >
       {/* Icon + Info */}
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <div
-          className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+          className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
           style={{ background: icon.bg }}
         >
-          <svg
-            width="22"
-            height="22"
-            fill="none"
-            stroke={icon.stroke}
-            strokeWidth="1.5"
-            viewBox="0 0 24 24"
-          >
-            <rect x="2" y="3" width="20" height="14" rx="2" />
-            <line x1="8" y1="21" x2="16" y2="21" />
-            <line x1="12" y1="17" x2="12" y2="21" />
-          </svg>
+          {app.iconUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={app.iconUrl}
+              alt={app.title || app.packageId}
+              className="w-full h-full object-cover rounded-xl"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
+          ) : (
+            <svg
+              width="22"
+              height="22"
+              fill="none"
+              stroke={icon.stroke}
+              strokeWidth="1.5"
+              viewBox="0 0 24 24"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          )}
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <p
-              className="text-sm font-semibold truncate"
-              style={{ color: "#111827", fontFamily: "monospace" }}
-            >
+            {/* ✅ اسم الـ app بدل الـ packageId */}
+            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+              {app.title || app.packageId}
+            </p>
+            {/* ✅ الـ packageId أصغر تحت الاسم */}
+            <p className="text-xs text-gray-400 dark:text-gray-500 font-mono hidden sm:block truncate">
               {app.packageId}
             </p>
             <span
@@ -99,10 +113,7 @@ export default function AppCard({ app, onSetLimit, onRefetch }: AppCardProps) {
 
           {hasLimit && !isBlocked ? (
             <div className="flex items-center gap-2">
-              <div
-                className="flex-1 rounded-full h-1"
-                style={{ background: "#f3f4f6" }}
-              >
+              <div className="flex-1 rounded-full h-1 bg-gray-100 dark:bg-gray-700">
                 <div
                   className="rounded-full h-1 transition-all"
                   style={{
@@ -119,9 +130,8 @@ export default function AppCard({ app, onSetLimit, onRefetch }: AppCardProps) {
               </span>
             </div>
           ) : (
-            <p className="text-xs" style={{ color: "#6b7280" }}>
-              Total: {totalUsage} min · Limit:{" "}
-              {hasLimit ? `${app.settings.dailyLimit}min` : "None"}
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {app.categories?.[0]?.name || "App"} · Total: {totalUsage} min
             </p>
           )}
         </div>

@@ -85,7 +85,7 @@ export default function LocationPage() {
     <div className="py-6 px-4">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Location</h1>
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Location</h1>
         <p className="text-sm text-gray-500 mt-1">
           Track your children and manage safe zones
         </p>
