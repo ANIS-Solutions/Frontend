@@ -112,9 +112,7 @@ function NotificationList({
       {/* Footer */}
       {notifications.length > 0 && (
         <div className="px-4 py-3 text-center border-t-[0.5px] border-gray-100 dark:border-gray-700">
-          <button className="text-xs font-medium" style={{ color: "#1E73BE", background: "none", border: "none", cursor: "pointer" }}>
-            View all notifications
-          </button>
+         
         </div>
       )}
     </>
