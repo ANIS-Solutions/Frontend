@@ -3,7 +3,6 @@ import { App } from "@/app/types/api/app.types";
 import { useBlockApp } from "@/app/hooks/apps/useBlockApp";
 import { useDeleteApp } from "@/app/hooks/apps/useDeleteApp";
 import { Trash2 } from "lucide-react";
-import Image from "next/image";
 
 interface AppCardProps {
   app: App;

@@ -72,9 +72,21 @@ export default function AppsList({ childId }: AppsListProps) {
     <>
       <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 mb-5">
         {[
-          { label: "Total Apps", value: stats.total, color: "var(--stat-neutral)" },
-          { label: "Blocked", value: stats.blocked, color: "var(--stat-alert)" },
-          { label: "With Limit", value: stats.limited, color: "var(--stat-warning)" },
+          {
+            label: "Total Apps",
+            value: stats.total,
+            color: "var(--stat-neutral)",
+          },
+          {
+            label: "Blocked",
+            value: stats.blocked,
+            color: "var(--stat-alert)",
+          },
+          {
+            label: "With Limit",
+            value: stats.limited,
+            color: "var(--stat-warning)",
+          },
         ].map(({ label, value, color }) => (
           <div
             key={label}
@@ -91,9 +103,7 @@ export default function AppsList({ childId }: AppsListProps) {
       </div>
 
       <div className="w-full overflow-x-auto mb-4">
-        <div
-          className="flex gap-1 p-1 rounded-xl min-w-max bg-gray-100 dark:bg-gray-700"
-        >
+        <div className="flex gap-1 p-1 rounded-xl min-w-max bg-gray-100 dark:bg-gray-700">
           {filters.map(({ id, label }) => (
             <button
               key={id}
@@ -118,9 +128,7 @@ export default function AppsList({ childId }: AppsListProps) {
 
       {/* Apps */}
       {filtered.length === 0 ? (
-        <div
-          className="rounded-2xl p-8 text-center bg-gray-50 dark:bg-gray-900 border-[0.5px] border-dashed border-gray-300 dark:border-gray-700"
-        >
+        <div className="rounded-2xl p-8 text-center bg-gray-50 dark:bg-gray-900 border-[0.5px] border-dashed border-gray-300 dark:border-gray-700">
           <Monitor
             size={32}
             className="mx-auto mb-2 text-gray-300 dark:text-gray-600"
@@ -138,9 +146,9 @@ export default function AppsList({ childId }: AppsListProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          {filtered.map((app) => (
+          {filtered.map((app, index) => (
             <AppCard
-              key={app.packageId}
+              key={`${app.packageId}-${index}`}
               app={app}
               onSetLimit={setSelectedApp}
               onRefetch={refetch}

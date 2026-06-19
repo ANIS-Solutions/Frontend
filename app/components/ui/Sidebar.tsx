@@ -13,16 +13,16 @@ import {
   Award,
   ShieldCheck,
   FileText,
+  Clock,
 } from "lucide-react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useLogout } from "@/app/hooks/auth/useLogout";
 import LogoImage from "@/public/imgs/Logo.jpeg";
-import NotificationBell from "@/app/components/dashboard/notification/NotificationBell";
-import ThemeToggle from "@/app/components/ui/ThemeToggle";
 
 const links = [
   { name: "Children", href: "/dashboard/children", icon: Users },
   { name: "App Control", href: "/dashboard/app-control", icon: Shield },
+  { name: "Screen Time", href: "/dashboard/screen-time", icon: Clock },
   { name: "Location", href: "/dashboard/location", icon: MapPin },
   { name: "Content Filter", href: "/dashboard/prompt", icon: ShieldCheck },
   { name: "Quests", href: "/dashboard/quests", icon: Trophy },

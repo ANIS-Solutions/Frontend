@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { useChildren } from "@/app/hooks/children/useChildren";
 import ChildTabs from "@/app/components/dashboard/location/ChildTabs";
-import AppsList from "@/app/components/dashboard/app/AppsList";
+import ScreenTimeView from "@/app/components/dashboard/screen-reward/ScreenTimeView";
 
-export default function AppControlPage() {
+export default function ScreenTimePage() {
   const { children, isLoading: childrenLoading } = useChildren();
-
   const [selectedChildId, setSelectedChildId] = useState("");
+
   const effectiveChildId = selectedChildId || children[0]?.id || "";
 
   if (childrenLoading) {
@@ -24,9 +24,9 @@ export default function AppControlPage() {
   return (
     <div className="py-6 px-4">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold  text-zinc-900 dark:text-zinc-100">App Control</h1>
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Screen Time</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Monitor and control your children&apos;s apps
+          Daily and weekly usage statistics
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export default function AppControlPage() {
       />
 
       {effectiveChildId ? (
-        <AppsList childId={effectiveChildId} />
+        <ScreenTimeView childId={effectiveChildId} />
       ) : (
         <div className="text-center py-16 text-gray-400">
           <p>No children found. Add a child first.</p>
