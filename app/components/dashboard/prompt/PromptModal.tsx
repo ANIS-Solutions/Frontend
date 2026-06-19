@@ -77,17 +77,17 @@ export default function PromptModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl w-full overflow-y-auto"
-        style={{ maxWidth: 480, maxHeight: "90vh", border: "0.5px solid #e5e7eb" }}
+        className="bg-white dark:bg-gray-800 rounded-2xl w-full overflow-y-auto border-[0.5px] border-gray-200 dark:border-gray-700"
+        style={{ maxWidth: 480, maxHeight: "90vh" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-gray-100">
-          <p className="text-sm font-semibold text-gray-800">
+        <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-700">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
             {isEdit ? "Edit Filter" : "Add Content Filter"}
           </p>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer" }}>
-            <X size={18} className="text-gray-400" />
+            <X size={18} className="text-gray-400 dark:text-gray-500" />
           </button>
         </div>
 
@@ -106,7 +106,7 @@ export default function PromptModal({
               value={formData.title}
               onChange={handleChange}
               placeholder="e.g. Adult Content"
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.title ? "border-red-400" : "border-gray-200"}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.title ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
               required
             />
             {fieldErrors?.title && <p className="text-xs mt-1 text-red-500">{fieldErrors.title}</p>}
@@ -120,7 +120,7 @@ export default function PromptModal({
               value={formData.key}
               onChange={handleChange}
               placeholder="e.g. Adult"
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.key ? "border-red-400" : "border-gray-200"}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.key ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
               required
             />
             {fieldErrors?.key && <p className="text-xs mt-1 text-red-500">{fieldErrors.key}</p>}
@@ -135,7 +135,7 @@ export default function PromptModal({
               onChange={handleChange}
               placeholder="Describe what content to filter..."
               rows={3}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] resize-none"
+              className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] resize-none"
               required
             />
           </div>
@@ -150,7 +150,7 @@ export default function PromptModal({
                 name="LevelOfStrictness"
                 value={formData.LevelOfStrictness}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
+                className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
               >
                 {STRICTNESS_LEVELS.map((l) => (
                   <option key={l} value={l}>{l}</option>
@@ -163,7 +163,7 @@ export default function PromptModal({
                 name="action"
                 value={formData.action}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
+                className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
               >
                 {ACTIONS.map((a) => (
                   <option key={a} value={a}>{a}</option>
@@ -213,8 +213,8 @@ export default function PromptModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl text-sm text-gray-600"
-              style={{ border: "0.5px solid #e5e7eb", background: "transparent", cursor: "pointer" }}
+              className="flex-1 py-3 rounded-xl text-sm text-gray-600 dark:text-gray-300 border-[0.5px] border-gray-200 dark:border-gray-700"
+              style={{ background: "transparent", cursor: "pointer" }}
             >
               Cancel
             </button>

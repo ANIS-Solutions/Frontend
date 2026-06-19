@@ -27,6 +27,8 @@ export default function NotFound() {
         Page Not Found
       </h1>
 
+       
+
       <p
         className="mt-3 text-sm leading-relaxed max-w-xs"
         style={{ color: "#ABABAF" }}

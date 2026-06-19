@@ -25,9 +25,7 @@ export default function ProtectedRoute({
     );
   }
 
-  // ✅ لو مش authenticated → مش يعرض حاجة (الـ redirect شغال)
   if (!isAuthenticated) return null;
 
-  // ✅ لو authenticated → يعرض الـ children
   return <>{children}</>;
 }

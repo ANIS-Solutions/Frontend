@@ -28,6 +28,96 @@ function timeAgo(date: string) {
   return `${Math.floor(hours / 24)} day${Math.floor(hours / 24) > 1 ? "s" : ""} ago`;
 }
 
+function NotificationList({
+  notifications,
+  onDelete,
+  onClearAll,
+  onClose,
+  clearLoading,
+}: {
+  notifications: Notification[];
+  onDelete: (id: string) => void;
+  onClearAll: () => void;
+  onClose: () => void;
+  clearLoading: boolean;
+}) {
+  return (
+    <>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b-[0.5px] border-gray-100 dark:border-gray-700">
+        <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">Notifications</p>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onClearAll}
+            disabled={clearLoading}
+            className="flex items-center gap-1 text-xs font-medium"
+            style={{ color: "#A32D2D", background: "none", border: "none", cursor: "pointer" }}
+          >
+            <Trash2 size={12} />
+            Clear all
+          </button>
+          <button onClick={onClose} className="md:hidden p-1 rounded-lg text-gray-400">
+            <X size={16} />
+          </button>
+        </div>
+      </div>
+
+      {/* List */}
+      <div className="overflow-y-auto" style={{ maxHeight: 360 }}>
+        {notifications.length === 0 ? (
+          <div className="text-center py-10">
+            <Bell size={28} className="mx-auto mb-2 text-gray-300 dark:text-gray-600" />
+            <p className="text-sm text-gray-400 dark:text-gray-500">No notifications yet</p>
+          </div>
+        ) : (
+          notifications.map((n) => {
+            const config = getTypeConfig(n.type);
+            return (
+              <div
+                key={n._id}
+                className={`flex items-start gap-3 px-4 py-3 transition-all border-b-[0.5px] border-gray-100 dark:border-gray-700 ${
+                  n.isRead ? "" : "bg-[#FAFBFF] dark:bg-gray-700/40"
+                }`}
+              >
+                <div className="shrink-0 mt-1">
+                  {!n.isRead
+                    ? <div className="w-2 h-2 rounded-full" style={{ background: "#1E73BE" }} />
+                    : <div className="w-2 h-2" />
+                  }
+                </div>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base" style={{ background: config.bg }}>
+                  {config.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-gray-800 dark:text-gray-100 mb-0.5">{n.title}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">{n.body}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">{timeAgo(n.createdAt)}</p>
+                </div>
+                <button
+                  onClick={() => onDelete(n._id)}
+                  className="p-1 rounded-lg shrink-0"
+                  style={{ background: "none", border: "none", cursor: "pointer", opacity: 0.4 }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.4")}
+                >
+                  <Trash2 size={13} className="text-gray-400 dark:text-gray-500" />
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Footer */}
+      {notifications.length > 0 && (
+        <div className="px-4 py-3 text-center border-t-[0.5px] border-gray-100 dark:border-gray-700">
+         
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<Notification | null>(null);
@@ -39,10 +129,7 @@ export default function NotificationBell() {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -51,20 +138,16 @@ export default function NotificationBell() {
   }, []);
 
   const prevNotificationsRef = useRef<string>("");
-
   useEffect(() => {
     const latest = notifications.find((n) => !n.isRead);
     if (!latest) return;
-
     if (prevNotificationsRef.current === latest._id) return;
     prevNotificationsRef.current = latest._id;
-
     const showTimer = setTimeout(() => {
       setToast(latest);
       const hideTimer = setTimeout(() => setToast(null), 5000);
       return () => clearTimeout(hideTimer);
     }, 0);
-
     return () => clearTimeout(showTimer);
   }, [notifications]);
 
@@ -78,23 +161,23 @@ export default function NotificationBell() {
     refetch();
   };
 
+  const listProps = {
+    notifications,
+    onDelete: handleDelete,
+    onClearAll: handleClearAll,
+    onClose: () => setOpen(false),
+    clearLoading,
+  };
+
   return (
     <>
-      {/* Bell Button */}
       <div className="relative" ref={dropdownRef}>
+        {/* Bell Button */}
         <button
-          onClick={() => {
-            setOpen(!open);
-            if (!open) refetch();
-          }}
-          className="relative p-2 rounded-xl transition-all"
-          style={{
-            border: "0.5px solid #e5e7eb",
-            background: "white",
-            cursor: "pointer",
-          }}
+          onClick={() => { setOpen(!open); if (!open) refetch(); }}
+          className="relative p-2 rounded-xl transition-all border-[0.5px] border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
         >
-          <Bell size={18} style={{ color: "#6b7280" }} />
+          <Bell size={18} className="text-gray-500 dark:text-gray-400" />
           {unreadCount > 0 && (
             <span
               className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-white flex items-center justify-center"
@@ -104,178 +187,49 @@ export default function NotificationBell() {
             </span>
           )}
         </button>
-        {/* Dropdown */}
+
+        {/* Desktop dropdown */}
         {open && (
           <div
-            className="absolute right-0 top-full mt-2 bg-white rounded-2xl z-50"
-            style={{
-              width: 360,
-              border: "0.5px solid #e5e7eb",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-            }}
+            className="hidden md:block absolute right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-2xl z-50 border-[0.5px] border-gray-200 dark:border-gray-700"
+            style={{ width: 360, boxShadow: "0 8px 24px rgba(0,0,0,0.1)" }}
           >
-            {/* Header */}
-            <div
-              className="flex items-center justify-between px-4 py-3"
-              style={{ borderBottom: "0.5px solid #f3f4f6" }}
-            >
-              <p className="text-sm font-semibold text-gray-800">
-                Notifications
-              </p>
-              <div className="flex items-center gap-3">
-                {/* <button
-                  className="text-xs font-medium"
-                  style={{
-                    color: "#1E73BE",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  Mark all as read
-                </button> */}
-                <button
-                  onClick={handleClearAll}
-                  disabled={clearLoading}
-                  className="flex items-center gap-1 text-xs font-medium"
-                  style={{
-                    color: "#A32D2D",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  <Trash2 size={12} />
-                  Clear all
-                </button>
-              </div>
-            </div>
-
-            {/* List */}
-            <div style={{ maxHeight: 360, overflowY: "auto" }}>
-              {notifications.length === 0 ? (
-                <div className="text-center py-10">
-                  <Bell
-                    size={28}
-                    className="mx-auto mb-2"
-                    style={{ color: "#d1d5db" }}
-                  />
-                  <p className="text-sm text-gray-400">No notifications yet</p>
-                </div>
-              ) : (
-                notifications.map((n) => {
-                  const config = getTypeConfig(n.type);
-                  return (
-                    <div
-                      key={n._id}
-                      className="flex items-start gap-3 px-4 py-3 transition-all"
-                      style={{
-                        borderBottom: "0.5px solid #f3f4f6",
-                        background: n.isRead ? "transparent" : "#FAFBFF",
-                      }}
-                    >
-                      {/* Unread dot */}
-                      <div className="shrink-0 mt-1">
-                        {!n.isRead && (
-                          <div
-                            className="w-2 h-2 rounded-full"
-                            style={{ background: "#1E73BE" }}
-                          />
-                        )}
-                        {n.isRead && <div className="w-2 h-2" />}
-                      </div>
-
-                      {/* Icon */}
-                      <div
-                        className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base"
-                        style={{ background: config.bg }}
-                      >
-                        {config.icon}
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-gray-800 mb-0.5">
-                          {n.title}
-                        </p>
-                        <p className="text-xs text-gray-500 mb-0.5">{n.body}</p>
-                        <p className="text-xs" style={{ color: "#9ca3af" }}>
-                          {timeAgo(n.createdAt)}
-                        </p>
-                      </div>
-
-                      {/* Delete */}
-                      <button
-                        onClick={() => handleDelete(n._id)}
-                        className="p-1 rounded-lg shrink-0 opacity-0 hover:opacity-100 transition-all"
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.opacity = "1")
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.opacity = "0.3")
-                        }
-                      >
-                        <Trash2 size={13} style={{ color: "#9ca3af" }} />
-                      </button>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-
-            {/* Footer */}
-            {notifications.length > 0 && (
-              <div
-                className="px-4 py-3 text-center"
-                style={{ borderTop: "0.5px solid #f3f4f6" }}
-              >
-                <button
-                  className="text-xs font-medium"
-                  style={{
-                    color: "#1E73BE",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  View all notifications
-                </button>
-              </div>
-            )}
+            <NotificationList {...listProps} />
           </div>
         )}
       </div>
 
+      {/* Mobile bottom sheet */}
+      {open && (
+        <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
+          <div
+            className="relative bg-white dark:bg-gray-800 rounded-t-2xl border-t border-gray-200 dark:border-gray-700"
+            style={{ boxShadow: "0 -4px 24px rgba(0,0,0,0.1)" }}
+          >
+            <div className="flex justify-center pt-3 pb-1">
+              <div className="w-10 h-1 rounded-full bg-gray-200 dark:bg-gray-600" />
+            </div>
+            <NotificationList {...listProps} />
+          </div>
+        </div>
+      )}
+
       {/* Toast */}
       {toast && (
         <div
-          className="fixed bottom-6 right-6 z-9999 flex items-center gap-3 bg-white rounded-2xl p-4 transition-all"
-          style={{
-            border: "0.5px solid #e5e7eb",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-            maxWidth: 320,
-          }}
+          className="fixed bottom-6 right-4 left-4 md:left-auto md:right-6 md:max-w-xs z-[9999] flex items-center gap-3 bg-white dark:bg-gray-800 rounded-2xl p-4 border-[0.5px] border-gray-200 dark:border-gray-700"
+          style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.12)" }}
         >
-          <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0"
-            style={{ background: getTypeConfig(toast.type).bg }}
-          >
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0" style={{ background: getTypeConfig(toast.type).bg }}>
             {getTypeConfig(toast.type).icon}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-gray-800">{toast.title}</p>
-            <p className="text-xs text-gray-500 truncate">{toast.body}</p>
+            <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{toast.title}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{toast.body}</p>
           </div>
-          <button
-            onClick={() => setToast(null)}
-            style={{ background: "none", border: "none", cursor: "pointer" }}
-          >
-            <X size={14} style={{ color: "#9ca3af" }} />
+          <button onClick={() => setToast(null)} style={{ background: "none", border: "none", cursor: "pointer" }}>
+            <X size={14} className="text-gray-400 dark:text-gray-500" />
           </button>
         </div>
       )}

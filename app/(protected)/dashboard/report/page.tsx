@@ -24,7 +24,7 @@ export default function ReportsPage() {
   return (
     <div className="py-6 px-4">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Reports</h1>
         <p className="text-sm text-gray-500 mt-1">
           Weekly activity reports for your children
         </p>

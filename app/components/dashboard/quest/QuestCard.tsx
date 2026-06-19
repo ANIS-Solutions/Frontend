@@ -77,15 +77,14 @@ export default function QuestCard({
 
   return (
     <div
-      className="rounded-2xl p-4 flex items-center gap-4 transition-all"
+      className={`rounded-2xl p-4 flex items-center gap-4 transition-all border-[0.5px] ${
+        quest.status === "CANCELED"
+          ? "bg-[#fff8f8] dark:bg-red-950/30 border-[#fecaca] dark:border-red-900/50"
+          : quest.status === "COMPLETED"
+            ? "bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+            : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+      }`}
       style={{
-        background:
-          quest.status === "CANCELED"
-            ? "#fff8f8"
-            : quest.status === "COMPLETED"
-              ? "#f9fafb"
-              : "white",
-        border: `0.5px solid ${quest.status === "CANCELED" ? "#fecaca" : "#e5e7eb"}`,
         opacity: isFinished ? 0.85 : 1,
       }}
     >
@@ -103,9 +102,12 @@ export default function QuestCard({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
           <p
-            className="text-sm font-semibold truncate"
+            className={`text-sm font-semibold truncate ${
+              isFinished
+                ? "text-gray-400 dark:text-gray-500"
+                : "text-gray-900 dark:text-gray-100"
+            }`}
             style={{
-              color: isFinished ? "#9ca3af" : "#111827",
               textDecoration: isFinished ? "line-through" : "none",
             }}
           >
@@ -120,7 +122,7 @@ export default function QuestCard({
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs" style={{ color: "#6b7280" }}>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             {quest.type} · ⭐ {quest.points} pts
           </span>
           {!isFinished && (
@@ -210,14 +212,13 @@ export default function QuestCard({
 
           <button
             onClick={() => onEdit(quest)}
-            className="p-1.5 rounded-lg"
+            className="p-1.5 rounded-lg border-[0.5px] border-gray-200 dark:border-gray-700"
             style={{
-              border: "0.5px solid #e5e7eb",
               background: "transparent",
               cursor: "pointer",
             }}
           >
-            <Pencil size={13} style={{ color: "#6b7280" }} />
+            <Pencil size={13} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
       )}

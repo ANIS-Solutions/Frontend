@@ -47,25 +47,25 @@ export default function LimitModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl p-6 w-full"
-        style={{ maxWidth: 380, border: "0.5px solid #e5e7eb" }}
+        className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full border-[0.5px] border-gray-200 dark:border-gray-700"
+        style={{ maxWidth: 380 }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-1">
-          <p className="text-sm font-semibold" style={{ color: "#111827" }}>
+          <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
             Set Daily Limit
           </p>
           <button
             onClick={onClose}
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
-            <X size={16} style={{ color: "#6b7280" }} />
+            <X size={16} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         <p
-          className="text-xs mb-4"
-          style={{ color: "#6b7280", fontFamily: "monospace" }}
+          className="text-xs mb-4 text-gray-500 dark:text-gray-400"
+          style={{ fontFamily: "monospace" }}
         >
           {app.packageId}
         </p>
@@ -80,8 +80,7 @@ export default function LimitModal({
         )}
 
         <label
-          className="block text-xs font-medium mb-1.5"
-          style={{ color: "#6b7280" }}
+          className="block text-xs font-medium mb-1.5 text-gray-500 dark:text-gray-400"
         >
           Daily Limit (minutes)
         </label>
@@ -90,7 +89,7 @@ export default function LimitModal({
           value={limit}
           onChange={(e) => setLimit(e.target.value)}
           placeholder="e.g. 120"
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] mb-3"
+          className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] mb-3"
         />
 
         {/* Quick buttons */}
@@ -119,12 +118,10 @@ export default function LimitModal({
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-xl text-sm"
+            className="flex-1 py-2.5 rounded-xl text-sm text-gray-500 dark:text-gray-400 border-[0.5px] border-gray-200 dark:border-gray-700"
             style={{
-              border: "0.5px solid #e5e7eb",
               background: "transparent",
               cursor: "pointer",
-              color: "#6b7280",
             }}
           >
             Cancel

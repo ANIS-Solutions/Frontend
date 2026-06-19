@@ -12,8 +12,7 @@ export default function ChildCard({ child, onEdit }: ChildCardProps) {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden flex flex-col"
-      style={{ background: "white", border: "0.5px solid #e5e7eb" }}
+      className="rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700"
     >
       {/* Color bar */}
       {/* <div style={{ height: 5, background: isMale ? "#1E73BE" : "#993556" }} /> */}
@@ -29,7 +28,7 @@ export default function ChildCard({ child, onEdit }: ChildCardProps) {
               {isMale ? "🧒" : "👧"}
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-800">{child.firstName}</p>
+              <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">{child.firstName}</p>
               <span
                 className="text-xs px-2 py-0.5 rounded-full font-medium"
                 style={{
@@ -44,16 +43,16 @@ export default function ChildCard({ child, onEdit }: ChildCardProps) {
 
           <button
             onClick={() => onEdit(child)}
-            className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ border: "0.5px solid #e5e7eb", background: "transparent", cursor: "pointer" }}
+            className="w-8 h-8 rounded-lg flex items-center justify-center border-[0.5px] border-gray-200 dark:border-gray-700"
+            style={{ background: "transparent", cursor: "pointer" }}
           >
-            <Pencil size={14} className="text-gray-400" />
+            <Pencil size={14} className="text-gray-400 dark:text-gray-500" />
           </button>
         </div>
 
         {/* Info */}
         <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-2 text-xs text-gray-500">
+          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
             <Calendar size={13} />
             <span>{new Date(child.dob).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
           </div>
@@ -62,12 +61,12 @@ export default function ChildCard({ child, onEdit }: ChildCardProps) {
             {child.deviceName ? (
               <>
                 <Smartphone size={13} className="text-green-500" />
-                <span className="text-gray-600">{child.deviceName}</span>
+                <span className="text-gray-600 dark:text-gray-300">{child.deviceName}</span>
               </>
             ) : (
               <>
-                <SmartphoneNfc size={13} className="text-gray-300" />
-                <span className="text-gray-400">No device paired</span>
+                <SmartphoneNfc size={13} className="text-gray-300 dark:text-gray-600" />
+                <span className="text-gray-400 dark:text-gray-500">No device paired</span>
               </>
             )}
           </div>
@@ -76,7 +75,7 @@ export default function ChildCard({ child, onEdit }: ChildCardProps) {
         {/* Hobbies */}
         {child.hobbies.length > 0 && (
           <div>
-            <p className="text-xs text-gray-400 mb-1.5">Hobbies</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mb-1.5">Hobbies</p>
             <div className="flex flex-wrap gap-1.5">
               {child.hobbies.map((h) => (
                 <span
@@ -96,14 +95,13 @@ export default function ChildCard({ child, onEdit }: ChildCardProps) {
 
         {/* Status */}
         <div
-          className="flex items-center gap-1.5 pt-2 mt-auto"
-          style={{ borderTop: "0.5px solid #f3f4f6" }}
+          className="flex items-center gap-1.5 pt-2 mt-auto border-t-[0.5px] border-gray-100 dark:border-gray-700"
         >
           <div
             className="w-1.5 h-1.5 rounded-full"
             style={{ background: child.isActive ? "#22c55e" : "#9ca3af" }}
           />
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-gray-400 dark:text-gray-500">
             {child.isActive ? "Active" : "Inactive"}
           </span>
         </div>

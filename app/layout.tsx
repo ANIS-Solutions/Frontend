@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ANIS",
   description: "ANIS Application",
+  icons:{
+    icon:"/icon.png"
+  }
 };
 
 export default function RootLayout({

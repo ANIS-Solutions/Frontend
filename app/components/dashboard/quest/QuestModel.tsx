@@ -112,24 +112,23 @@ export default function QuestModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl p-6 w-full"
+        className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full border-[0.5px] border-gray-200 dark:border-gray-700"
         style={{
           maxWidth: 500,
-          border: "0.5px solid #e5e7eb",
           maxHeight: "90vh",
           overflowY: "auto",
         }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <p className="text-base font-semibold " style={{ color: "#111827" }}>
+          <p className="text-base font-semibold text-gray-900 dark:text-gray-100">
             {isEdit ? "Edit Quest" : "Add New Quest"}
           </p>
           <button
             onClick={onClose}
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
-            <X size={18} style={{ color: "#6b7280" }} />
+            <X size={18} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
@@ -155,7 +154,7 @@ export default function QuestModal({
               value={formData.title}
               onChange={handleChange}
               placeholder="e.g. Read 2 chapters..."
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.title ? "border-red-400" : "border-gray-200"}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.title ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
               required
             />
             {fieldErrors?.title && (
@@ -176,7 +175,7 @@ export default function QuestModal({
               onChange={handleChange}
               placeholder="Quest details..."
               rows={3}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] resize-none"
+              className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] resize-none"
               required
             />
           </div>
@@ -193,7 +192,7 @@ export default function QuestModal({
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
+                className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE]"
               >
                 {QUEST_TYPES.map((t) => (
                   <option key={t} value={t}>
@@ -215,7 +214,7 @@ export default function QuestModal({
                 value={formData.points}
                 onChange={handleChange}
                 placeholder="42"
-                className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.points ? "border-red-400" : "border-gray-200"}`}
+                className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.points ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
                 required
               />
               {fieldErrors?.points && (
@@ -238,7 +237,7 @@ export default function QuestModal({
               name="deadline"
               value={formData.deadline}
               onChange={handleChange}
-              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] ${fieldErrors?.deadline ? "border-red-400" : "border-gray-200"}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E73BE]/30 focus:border-[#1E73BE] dark:bg-gray-700 dark:text-gray-100 ${fieldErrors?.deadline ? "border-red-400" : "border-gray-200 dark:border-gray-600"}`}
               required
             />
             {fieldErrors?.deadline && (
@@ -252,12 +251,10 @@ export default function QuestModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl text-sm"
+              className="flex-1 py-3 rounded-xl text-sm text-gray-500 dark:text-gray-400 border-[0.5px] border-gray-200 dark:border-gray-700"
               style={{
-                border: "0.5px solid #e5e7eb",
                 background: "transparent",
                 cursor: "pointer",
-                color: "#6b7280",
               }}
             >
               Cancel

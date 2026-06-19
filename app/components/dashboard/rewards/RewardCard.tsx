@@ -41,10 +41,12 @@ export default function RewardCard({
 
   return (
     <div
-      className="rounded-2xl p-4 flex items-center gap-4 transition-all"
+      className={`rounded-2xl p-4 flex items-center gap-4 transition-all border-[0.5px] ${
+        isRedeemed
+          ? "bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-700"
+          : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+      }`}
       style={{
-        background: isRedeemed ? "#f9fafb" : "white",
-        border: `0.5px solid ${isRedeemed ? "#d1d5db" : "#e5e7eb"}`,
         opacity: isRedeemed ? 0.85 : 1,
       }}
     >
@@ -65,9 +67,12 @@ export default function RewardCard({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
           <p
-            className="text-sm font-semibold truncate"
+            className={`text-sm font-semibold truncate ${
+              isRedeemed
+                ? "text-gray-400 dark:text-gray-500"
+                : "text-gray-900 dark:text-gray-100"
+            }`}
             style={{
-              color: isRedeemed ? "#9ca3af" : "#111827",
               textDecoration: isRedeemed ? "line-through" : "none",
             }}
           >
@@ -100,11 +105,11 @@ export default function RewardCard({
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-xs" style={{ color: "#6b7280" }}>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             ⭐ {reward.pointsCost} pts
           </span>
 
-          <span className="text-xs" style={{ color: "#6b7280" }}>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             {reward.redemptionType === "ONCE" ? "One-time" : "Multiple"} ·{" "}
             {reward.timesRedeemed}x redeemed
           </span>
@@ -128,14 +133,13 @@ export default function RewardCard({
           <button
             onClick={() => onEdit(reward)}
             disabled={isLoading}
-            className="p-1.5 rounded-lg"
+            className="p-1.5 rounded-lg border-[0.5px] border-gray-200 dark:border-gray-700"
             style={{
-              border: "0.5px solid #e5e7eb",
               background: "transparent",
               cursor: isLoading ? "not-allowed" : "pointer",
             }}
           >
-            <Pencil size={13} style={{ color: "#6b7280" }} />
+            <Pencil size={13} className="text-gray-500 dark:text-gray-400" />
           </button>
         )}
 

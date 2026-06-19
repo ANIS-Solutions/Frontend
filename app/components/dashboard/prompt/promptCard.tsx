@@ -52,8 +52,7 @@ export default function PromptCard({
 
   return (
     <div
-      className="rounded-2xl p-4 flex items-center gap-4"
-      style={{ background: "white", border: "0.5px solid #e5e7eb" }}
+      className="rounded-2xl p-4 flex items-center gap-4 bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700"
     >
       <div
         className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
@@ -64,7 +63,7 @@ export default function PromptCard({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-          <p className="text-sm font-semibold text-gray-800">{prompt.title}</p>
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">{prompt.title}</p>
 
           <span
             className="text-xs px-2 py-0.5 rounded-full font-medium"
@@ -92,7 +91,7 @@ export default function PromptCard({
           </span>
         </div>
 
-        <p className="text-xs truncate" style={{ color: "#6b7280" }}>
+        <p className="text-xs truncate text-gray-500 dark:text-gray-400">
           {prompt.description}
         </p>
       </div>
@@ -101,14 +100,13 @@ export default function PromptCard({
       <div className="flex gap-2 shrink-0">
         <button
           onClick={() => onEdit(prompt)}
-          className="p-1.5 rounded-lg"
+          className="p-1.5 rounded-lg border-[0.5px] border-gray-200 dark:border-gray-700"
           style={{
-            border: "0.5px solid #e5e7eb",
             background: "transparent",
             cursor: "pointer",
           }}
         >
-          <Pencil size={13} className="text-gray-400" />
+          <Pencil size={13} className="text-gray-400 dark:text-gray-500" />
         </button>
         <button
           onClick={handleDelete}

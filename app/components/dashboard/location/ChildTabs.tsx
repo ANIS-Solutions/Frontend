@@ -10,8 +10,7 @@ interface ChildTabsProps {
 export default function ChildTabs({ items, selectedId, onSelect }: ChildTabsProps) {
   return (
     <div
-      className="mb-4 overflow-x-auto"
-      style={{ borderBottom: "0.5px solid #e5e7eb" }}
+      className="mb-4 overflow-x-auto border-b-[0.5px] border-gray-200 dark:border-gray-700"
     >
       <div className="flex gap-0 min-w-max">
         {items.map((child) => (

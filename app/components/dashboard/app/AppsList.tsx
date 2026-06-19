@@ -47,8 +47,7 @@ export default function AppsList({ childId }: AppsListProps) {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="rounded-2xl h-20 animate-pulse"
-            style={{ background: "#f3f4f6" }}
+            className="rounded-2xl h-20 animate-pulse bg-gray-100 dark:bg-gray-700"
           />
         ))}
       </div>
@@ -73,16 +72,27 @@ export default function AppsList({ childId }: AppsListProps) {
     <>
       <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 mb-5">
         {[
-          { label: "Total Apps", value: stats.total, color: "#111827" },
-          { label: "Blocked", value: stats.blocked, color: "#F72B35" },
-          { label: "With Limit", value: stats.limited, color: "#854F0B" },
+          {
+            label: "Total Apps",
+            value: stats.total,
+            color: "var(--stat-neutral)",
+          },
+          {
+            label: "Blocked",
+            value: stats.blocked,
+            color: "var(--stat-alert)",
+          },
+          {
+            label: "With Limit",
+            value: stats.limited,
+            color: "var(--stat-warning)",
+          },
         ].map(({ label, value, color }) => (
           <div
             key={label}
-            className="rounded-2xl p-4"
-            style={{ background: "white", border: "0.5px solid #e5e7eb" }}
+            className="rounded-2xl p-4 bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700"
           >
-            <p className="text-xs mb-1.5" style={{ color: "#6b7280" }}>
+            <p className="text-xs mb-1.5 text-gray-500 dark:text-gray-400">
               {label}
             </p>
             <p className="text-xl sm:text-2xl font-bold" style={{ color }}>
@@ -93,19 +103,17 @@ export default function AppsList({ childId }: AppsListProps) {
       </div>
 
       <div className="w-full overflow-x-auto mb-4">
-        <div
-          className="flex gap-1 p-1 rounded-xl min-w-max"
-          style={{ background: "#f3f4f6" }}
-        >
+        <div className="flex gap-1 p-1 rounded-xl min-w-max bg-gray-100 dark:bg-gray-700">
           {filters.map(({ id, label }) => (
             <button
               key={id}
               onClick={() => setFilter(id)}
-              className="px-3 py-1.5 rounded-lg text-xs transition-all whitespace-nowrap"
+              className={`px-3 py-1.5 rounded-lg text-xs transition-all whitespace-nowrap ${
+                filter === id
+                  ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-medium"
+                  : "bg-transparent text-gray-500 dark:text-gray-400"
+              }`}
               style={{
-                background: filter === id ? "white" : "transparent",
-                color: filter === id ? "#111827" : "#6b7280",
-                fontWeight: filter === id ? 500 : 400,
                 border: "none",
                 cursor: "pointer",
                 boxShadow:
@@ -120,21 +128,17 @@ export default function AppsList({ childId }: AppsListProps) {
 
       {/* Apps */}
       {filtered.length === 0 ? (
-        <div
-          className="rounded-2xl p-8 text-center"
-          style={{ background: "#f9fafb", border: "0.5px dashed #d1d5db" }}
-        >
+        <div className="rounded-2xl p-8 text-center bg-gray-50 dark:bg-gray-900 border-[0.5px] border-dashed border-gray-300 dark:border-gray-700">
           <Monitor
             size={32}
-            className="mx-auto mb-2"
-            style={{ color: "#d1d5db" }}
+            className="mx-auto mb-2 text-gray-300 dark:text-gray-600"
           />
-          <p className="text-sm font-medium mb-1" style={{ color: "#9ca3af" }}>
+          <p className="text-sm font-medium mb-1 text-gray-400 dark:text-gray-500">
             {apps.length === 0
               ? "No apps installed yet"
               : "No apps match this filter"}
           </p>
-          <p className="text-xs" style={{ color: "#9ca3af" }}>
+          <p className="text-xs text-gray-400 dark:text-gray-500">
             {apps.length === 0
               ? "Apps will appear here once the child's device is paired"
               : "Try selecting a different filter"}
@@ -142,9 +146,9 @@ export default function AppsList({ childId }: AppsListProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          {filtered.map((app) => (
+          {filtered.map((app, index) => (
             <AppCard
-              key={app.packageId}
+              key={`${app.packageId}-${index}`}
               app={app}
               onSetLimit={setSelectedApp}
               onRefetch={refetch}

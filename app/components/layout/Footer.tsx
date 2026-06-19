@@ -64,7 +64,7 @@ function Footer() {
         <div className="border-t border-slate-300 my-12"></div>
 
         <div className="flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
-          <p>© 2026 ANIS. All rights reserved.</p>
+          <p>&copy; 2026 ANIS. All rights reserved.</p>
 
           <div className="flex gap-8 mt-4 md:mt-0">
             <Link href="" className="hover:text-slate-800 transition">

@@ -56,8 +56,7 @@ export default function QuestsList({ childId }: QuestsListProps) {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="rounded-2xl h-16 animate-pulse"
-            style={{ background: "#f3f4f6" }}
+            className="rounded-2xl h-16 animate-pulse bg-gray-100 dark:bg-gray-700"
           />
         ))}
       </div>
@@ -83,21 +82,20 @@ export default function QuestsList({ childId }: QuestsListProps) {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[
-          { label: "Total Quests", value: stats.total, color: "#111827" },
-          { label: "In Progress", value: stats.inProgress, color: "#1E73BE" },
-          { label: "Completed", value: stats.completed, color: "#3B6D11" },
+          { label: "Total Quests", value: stats.total, color: "var(--stat-neutral)" },
+          { label: "In Progress", value: stats.inProgress, color: "var(--stat-primary)" },
+          { label: "Completed", value: stats.completed, color: "var(--stat-success)" },
           {
             label: "Points Earned",
             value: stats.totalPoints,
-            color: "#854F0B",
+            color: "var(--stat-warning)",
           },
         ].map(({ label, value, color }) => (
           <div
             key={label}
-            className="rounded-2xl p-4"
-            style={{ background: "white", border: "0.5px solid #e5e7eb" }}
+            className="rounded-2xl p-4 bg-white dark:bg-gray-800 border-[0.5px] border-gray-200 dark:border-gray-700"
           >
-            <p className="text-xs mb-1.5" style={{ color: "#6b7280" }}>
+            <p className="text-xs mb-1.5 text-gray-500 dark:text-gray-400">
               {label}
             </p>
             <p className="text-2xl font-bold" style={{ color }}>
@@ -111,18 +109,18 @@ export default function QuestsList({ childId }: QuestsListProps) {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
         <div className="w-full sm:w-auto overflow-x-auto">
           <div
-            className="flex gap-1 p-1 rounded-xl min-w-max"
-            style={{ background: "#f3f4f6" }}
+            className="flex gap-1 p-1 rounded-xl min-w-max bg-gray-100 dark:bg-gray-700"
           >
             {filters.map(({ id, label }) => (
               <button
                 key={id}
                 onClick={() => setFilter(id)}
-                className="px-3 py-1.5 rounded-lg text-xs transition-all whitespace-nowrap"
+                className={`px-3 py-1.5 rounded-lg text-xs transition-all whitespace-nowrap ${
+                  filter === id
+                    ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-medium"
+                    : "bg-transparent text-gray-500 dark:text-gray-400"
+                }`}
                 style={{
-                  background: filter === id ? "white" : "transparent",
-                  color: filter === id ? "#111827" : "#6b7280",
-                  fontWeight: filter === id ? 500 : 400,
                   border: "none",
                   cursor: "pointer",
                   boxShadow:
@@ -147,20 +145,18 @@ export default function QuestsList({ childId }: QuestsListProps) {
       {/* Quests */}
       {filtered.length === 0 ? (
         <div
-          className="rounded-2xl p-8 text-center"
-          style={{ background: "#f9fafb", border: "0.5px dashed #d1d5db" }}
+          className="rounded-2xl p-8 text-center bg-gray-50 dark:bg-gray-900 border-[0.5px] border-dashed border-gray-300 dark:border-gray-700"
         >
           <Trophy
             size={32}
-            className="mx-auto mb-2"
-            style={{ color: "#d1d5db" }}
+            className="mx-auto mb-2 text-gray-300 dark:text-gray-600"
           />
-          <p className="text-sm font-medium mb-1" style={{ color: "#9ca3af" }}>
+          <p className="text-sm font-medium mb-1 text-gray-400 dark:text-gray-500">
             {quests.length === 0
               ? "No quests yet"
               : "No quests match this filter"}
           </p>
-          <p className="text-xs" style={{ color: "#9ca3af" }}>
+          <p className="text-xs text-gray-400 dark:text-gray-500">
             {quests.length === 0
               ? "Add a quest to get started"
               : "Try a different filter"}

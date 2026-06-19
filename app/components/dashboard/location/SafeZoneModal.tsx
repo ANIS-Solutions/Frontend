@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, FormEvent, useRef } from "react";
+import { useState, useEffect,  FormEvent, useRef } from "react";
 import { SafeZone, AddLocationPayload } from "@/app/types/api/location.types";
 import { X, MapPin } from "lucide-react";
 import type { LeafletMouseEvent, Map, Marker } from "leaflet";
@@ -13,6 +13,14 @@ interface SafeZoneModalProps {
   editZone?: SafeZone | null;
 }
 
+const getInitialData = (editZone?: SafeZone | null) => ({
+  title: editZone?.title ?? "",
+  address: editZone?.address ?? "",
+  lat: editZone ? String(editZone.location.coordinates[1]) : "",
+  lng: editZone ? String(editZone.location.coordinates[0]) : "",
+  safeRadius: editZone ? String(editZone.safeRadius) : "500",
+});
+
 export default function SafeZoneModal({
   isOpen,
   onClose,
@@ -22,37 +30,11 @@ export default function SafeZoneModal({
   editZone,
 }: SafeZoneModalProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-
   const mapInstanceRef = useRef<Map | null>(null);
   const markerRef = useRef<Marker | null>(null);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    address: "",
-    lat: "",
-    lng: "",
-    safeRadius: "500",
-  });
+  const [formData, setFormData] = useState(() => getInitialData(editZone));
 
-  useEffect(() => {
-    if (editZone) {
-      setFormData({
-        title: editZone.title,
-        address: editZone.address,
-        lat: String(editZone.location.coordinates[1]),
-        lng: String(editZone.location.coordinates[0]),
-        safeRadius: String(editZone.safeRadius),
-      });
-    } else {
-      setFormData({
-        title: "",
-        address: "",
-        lat: "",
-        lng: "",
-        safeRadius: "500",
-      });
-    }
-  }, [editZone, isOpen]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -68,7 +50,6 @@ export default function SafeZoneModal({
       if (!mapRef.current || mapInstanceRef.current) return;
 
       const L = (await import("leaflet")).default;
-      //   await import("leaflet/dist/leaflet.css");
 
       const defaultCenter: [number, number] = editZone
         ? [editZone.location.coordinates[1], editZone.location.coordinates[0]]
@@ -82,7 +63,6 @@ export default function SafeZoneModal({
 
       map.on("click", (e: LeafletMouseEvent) => {
         const { lat, lng } = e.latlng;
-
         setFormData((prev) => ({
           ...prev,
           lat: lat.toFixed(6),
@@ -145,7 +125,7 @@ export default function SafeZoneModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl p-6 w-full"
+        className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full"
         style={{
           maxWidth: 580,
           border: "0.5px solid var(--color-border-tertiary)",
@@ -155,25 +135,16 @@ export default function SafeZoneModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <p
-            className="text-base font-medium"
-            style={{ color: "var(--color-text-primary)" }}
-          >
+          <p className="text-base font-medium" style={{ color: "var(--color-text-primary)" }}>
             {editZone ? "Edit Safe Zone" : "Add Safe Zone"}
           </p>
-          <button
-            onClick={onClose}
-            style={{ background: "none", border: "none", cursor: "pointer" }}
-          >
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer" }}>
             <X size={18} style={{ color: "var(--color-text-secondary)" }} />
           </button>
         </div>
 
         {error && (
-          <div
-            className="mb-3 p-3 rounded-xl text-xs"
-            style={{ background: "#FCEBEB", color: "#A32D2D" }}
-          >
+          <div className="mb-3 p-3 rounded-xl text-xs" style={{ background: "#FCEBEB", color: "#A32D2D" }}>
             {error}
           </div>
         )}
@@ -181,37 +152,23 @@ export default function SafeZoneModal({
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label
-                className="block text-xs font-medium mb-1"
-                style={{ color: "#1E73BE" }}
-              >
-                Title
-              </label>
+              <label className="block text-xs font-medium mb-1" style={{ color: "#1E73BE" }}>Title</label>
               <input
                 value={formData.title}
-                onChange={(e) =>
-                  setFormData((p) => ({ ...p, title: e.target.value }))
-                }
+                onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))}
                 placeholder="e.g. Home, School..."
-                className="w-full rounded-xl px-3 py-2.5 text-sm"
+                className="w-full rounded-xl px-3 py-2.5 text-sm dark:bg-gray-700 dark:text-gray-100"
                 style={{ border: "0.5px solid var(--color-border-secondary)" }}
                 required
               />
             </div>
             <div>
-              <label
-                className="block text-xs font-medium mb-1"
-                style={{ color: "#1E73BE" }}
-              >
-                Address
-              </label>
+              <label className="block text-xs font-medium mb-1" style={{ color: "#1E73BE" }}>Address</label>
               <input
                 value={formData.address}
-                onChange={(e) =>
-                  setFormData((p) => ({ ...p, address: e.target.value }))
-                }
+                onChange={(e) => setFormData((p) => ({ ...p, address: e.target.value }))}
                 placeholder="62, Maadi sq. Cairo"
-                className="w-full rounded-xl px-3 py-2.5 text-sm"
+                className="w-full rounded-xl px-3 py-2.5 text-sm dark:bg-gray-700 dark:text-gray-100"
                 style={{ border: "0.5px solid var(--color-border-secondary)" }}
                 required
               />
@@ -219,63 +176,32 @@ export default function SafeZoneModal({
           </div>
 
           <div>
-            <label
-              className="block text-xs font-medium mb-1"
-              style={{ color: "#1E73BE" }}
-            >
-              Safe Radius (meters)
-            </label>
+            <label className="block text-xs font-medium mb-1" style={{ color: "#1E73BE" }}>Safe Radius (meters)</label>
             <input
               type="number"
               value={formData.safeRadius}
-              onChange={(e) =>
-                setFormData((p) => ({ ...p, safeRadius: e.target.value }))
-              }
+              onChange={(e) => setFormData((p) => ({ ...p, safeRadius: e.target.value }))}
               placeholder="500"
-              className="w-full rounded-xl px-3 py-2.5 text-sm"
+              className="w-full rounded-xl px-3 py-2.5 text-sm dark:bg-gray-700 dark:text-gray-100"
               style={{ border: "0.5px solid var(--color-border-secondary)" }}
               required
             />
           </div>
 
           <div>
-            <label
-              className="block text-xs font-medium mb-1"
-              style={{ color: "#1E73BE" }}
-            >
-              Pick Location on Map
-            </label>
+            <label className="block text-xs font-medium mb-1" style={{ color: "#1E73BE" }}>Pick Location on Map</label>
 
             {formData.lat && formData.lng ? (
-              <div
-                className="flex items-center gap-2 mb-2 p-2 rounded-xl"
-                style={{
-                  background: "#EAF3DE",
-                  border: "0.5px solid #C0DD97",
-                }}
-              >
+              <div className="flex items-center gap-2 mb-2 p-2 rounded-xl" style={{ background: "#EAF3DE", border: "0.5px solid #C0DD97" }}>
                 <MapPin size={13} style={{ color: "#3B6D11" }} />
-                <span
-                  className="text-xs font-medium"
-                  style={{ color: "#27500A" }}
-                >
-                  {parseFloat(formData.lat).toFixed(4)},{" "}
-                  {parseFloat(formData.lng).toFixed(4)}
+                <span className="text-xs font-medium" style={{ color: "#27500A" }}>
+                  {parseFloat(formData.lat).toFixed(4)}, {parseFloat(formData.lng).toFixed(4)}
                 </span>
               </div>
             ) : (
-              <div
-                className="flex items-center gap-2 mb-2 p-2 rounded-xl"
-                style={{ background: "var(--color-background-secondary)" }}
-              >
-                <MapPin
-                  size={13}
-                  style={{ color: "var(--color-text-tertiary)" }}
-                />
-                <span
-                  className="text-xs"
-                  style={{ color: "var(--color-text-secondary)" }}
-                >
+              <div className="flex items-center gap-2 mb-2 p-2 rounded-xl" style={{ background: "var(--color-background-secondary)" }}>
+                <MapPin size={13} style={{ color: "var(--color-text-tertiary)" }} />
+                <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
                   Click on the map to pick a location
                 </span>
               </div>
@@ -283,13 +209,7 @@ export default function SafeZoneModal({
 
             <div
               ref={mapRef}
-              style={{
-                height: 240,
-                borderRadius: 12,
-                overflow: "hidden",
-                border: "0.5px solid var(--color-border-secondary)",
-                cursor: "crosshair",
-              }}
+              style={{ height: 240, borderRadius: 12, overflow: "hidden", border: "0.5px solid var(--color-border-secondary)", cursor: "crosshair" }}
             />
           </div>
 
@@ -297,12 +217,8 @@ export default function SafeZoneModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl text-sm"
-              style={{
-                border: "0.5px solid var(--color-border-secondary)",
-                background: "transparent",
-                cursor: "pointer",
-              }}
+              className="flex-1 py-3 rounded-xl text-sm dark:text-gray-300"
+              style={{ border: "0.5px solid var(--color-border-secondary)", background: "transparent", cursor: "pointer" }}
             >
               Cancel
             </button>
@@ -311,11 +227,9 @@ export default function SafeZoneModal({
               disabled={isLoading || !formData.lat || !formData.lng}
               className="flex-1 py-3 rounded-xl text-sm text-white"
               style={{
-                background:
-                  formData.lat && formData.lng ? "#1E73BE" : "#93c5fd",
+                background: formData.lat && formData.lng ? "#1E73BE" : "#93c5fd",
                 border: "none",
-                cursor:
-                  formData.lat && formData.lng ? "pointer" : "not-allowed",
+                cursor: formData.lat && formData.lng ? "pointer" : "not-allowed",
                 opacity: isLoading ? 0.5 : 1,
               }}
             >
