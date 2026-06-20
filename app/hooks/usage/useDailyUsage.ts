@@ -16,7 +16,7 @@ export function useDailyUsage(childId: string) {
     setError(null);
     try {
       const res = await usageService.getDailyUsage(childId);
-      const list = res.data.data?.data || [];
+      const list = res.data.data?.items || [];
       const today = new Date().toISOString().split("T")[0];
       const todayUsage = list.find((d) => d.date === today) || list[0] || null;
 

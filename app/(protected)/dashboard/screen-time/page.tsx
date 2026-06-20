@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useChildren } from "@/app/hooks/children/useChildren";
 import ChildTabs from "@/app/components/dashboard/location/ChildTabs";
-import ScreenTimeView from "@/app/components/dashboard/screen-reward/ScreenTimeView";
+import ScreenTimeView from "@/app/components/dashboard/screen-time/ScreenTimeView";
 
 export default function ScreenTimePage() {
   const { children, isLoading: childrenLoading } = useChildren();

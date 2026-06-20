@@ -40,7 +40,7 @@ export default function ReportsList({ childId }: ReportsListProps) {
 
   if (error) {
     return (
-      <div className="p-4 rounded-xl text-sm" style={{ background: "#FCEBEB", color: "#A32D2D" }}>
+      <div className="p-4 rounded-xl text-sm bg-[#FCEBEB] dark:bg-red-950/40 text-[#A32D2D] dark:text-red-300">
         {error}
       </div>
     );
