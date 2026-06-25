@@ -218,7 +218,7 @@ export default function NotificationBell() {
       {/* Toast */}
       {toast && (
         <div
-          className="fixed bottom-6 right-4 left-4 md:left-auto md:right-6 md:max-w-xs z-[9999] flex items-center gap-3 bg-white dark:bg-gray-800 rounded-2xl p-4 border-[0.5px] border-gray-200 dark:border-gray-700"
+          className="fixed bottom-6 right-4 left-4 md:left-auto md:right-6 md:max-w-xs z-9999 flex items-center gap-3 bg-white dark:bg-gray-800 rounded-2xl p-4 border-[0.5px] border-gray-200 dark:border-gray-700"
           style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.12)" }}
         >
           <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0" style={{ background: getTypeConfig(toast.type).bg }}>
