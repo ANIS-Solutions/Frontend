@@ -119,9 +119,10 @@ const sectionTitles = [
   "الأثر التنموي",
   "توصيات",
   "خلاصة",
+  "ختام",
 ];
 
-const arabicNumbers = ["١", "٢", "٣", "٤", "٥", "٦", "٧"];
+const arabicNumbers = ["١", "٢", "٣", "٤", "٥", "٦", "٧","٨"];
 
 const barColors = [
   "#1E73BE",
@@ -229,7 +230,7 @@ export default function ReportContent({ report }: ReportContentProps) {
                   className="text-sm sm:text-base font-bold m-0"
                   style={{ color: config.color }}
                 >
-                  {sectionTitles[i] || `قسم ${i + 1}`}
+                  {sectionTitles[i] || `ختام`}
                 </p>
               </div>
 
